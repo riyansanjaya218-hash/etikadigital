@@ -78,7 +78,7 @@ export const CoverProfileModal: React.FC<CoverProfileModalProps> = ({
                 IDENTITAS PESERTA TERDAFTAR (AKSES MODUL TERBUKA):
               </span>
               <span className="text-sm font-bold">
-                {profile.nama} ({profile.jenisKelamin || 'Pria/Wanita'}) — {profile.pekerjaan}
+                {profile.nama} ({profile.jenisKelamin || 'Pria/Wanita'}) — {profile.pekerjaan || 'Peserta'}{profile.instansi ? ` | ${profile.instansi}` : ''}
               </span>
             </div>
           </div>
@@ -141,7 +141,7 @@ export const CoverProfileModal: React.FC<CoverProfileModalProps> = ({
             </span>
           </div>
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
             <div>
               <label className="block text-slate-800 dark:text-slate-200 font-extrabold mb-1">Nama Lengkap *</label>
               <input
@@ -173,17 +173,28 @@ export const CoverProfileModal: React.FC<CoverProfileModalProps> = ({
               <input
                 type="text"
                 required
-                placeholder="misal: Mahasiswa / Dosen / Guru"
+                placeholder="misal: Mahasiswa / Dosen / Guru / Umum"
                 value={formData.pekerjaan || ''}
                 onChange={(e) => setFormData({ ...formData, pekerjaan: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-amber-400 focus:outline-none"
               />
             </div>
 
-            <div className="sm:col-span-3 flex items-end pt-2">
+            <div>
+              <label className="block text-slate-800 dark:text-slate-200 font-extrabold mb-1">Instansi / Perguruan Tinggi / Sekolah</label>
+              <input
+                type="text"
+                placeholder="misal: Universitas Negeri Jakarta / SMAN 1 / Umum"
+                value={formData.instansi || ''}
+                onChange={(e) => setFormData({ ...formData, instansi: e.target.value })}
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white font-medium focus:ring-2 focus:ring-amber-400 focus:outline-none"
+              />
+            </div>
+
+            <div className="grid-cols-1 sm:col-span-2 lg:col-span-4 flex items-end pt-2">
               <button
                 type="submit"
-                className="w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+                className="w-full py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>SIMPAN IDENTITAS & BUKA AKSES E-MODUL</span>
                 <ArrowRight className="w-4 h-4" />

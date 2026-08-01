@@ -28,7 +28,7 @@ export const FinalExamView: React.FC<FinalExamViewProps> = ({
   // Timer: 20 minutes (1200 seconds)
   const [timeLeft, setTimeLeft] = useState(1200);
 
-  // Sync state when student progress changes
+  // Sync state when student progress or profile changes
   useEffect(() => {
     const currentScore = progress.finalExamScore;
     setScore(currentScore);
@@ -41,7 +41,25 @@ export const FinalExamView: React.FC<FinalExamViewProps> = ({
       setCurrentIdx(0);
       setTimeLeft(1200);
     }
-  }, [progress]);
+  }, [progress, profile]);
+
+  const handleRetakeExam = () => {
+    if (confirm('Apakah Anda yakin ingin mengulang Kuis Akhir?\n\nSemua jawaban dan skor kuis akhir peserta ini akan diset ulang dari awal.')) {
+      setAnswers({});
+      setBookmarks([]);
+      setCurrentIdx(0);
+      setTimeLeft(1200);
+      setSubmitted(false);
+      setScore(null);
+      setPassed(false);
+
+      onSaveProgress({
+        ...progress,
+        finalExamScore: null,
+        finalExamPassed: false
+      });
+    }
+  };
 
   useEffect(() => {
     if (submitted) return;
@@ -141,12 +159,21 @@ export const FinalExamView: React.FC<FinalExamViewProps> = ({
             {passed && (
               <button
                 onClick={onOpenCertificate}
-                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 border border-emerald-400/30 flex items-center gap-2 transition-all transform hover:-translate-y-0.5"
+                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-emerald-500/25 border border-emerald-400/30 flex items-center gap-2 transition-all transform hover:-translate-y-0.5 cursor-pointer"
               >
                 <Award className="w-5 h-5 text-amber-300" />
                 <span>Buka Sertifikat Kelulusan</span>
               </button>
             )}
+
+            <button
+              onClick={handleRetakeExam}
+              className="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-xs sm:text-sm border border-slate-700 flex items-center gap-2 transition-all cursor-pointer shadow-md"
+              title="Reset dan kerjakan ulang kuis akhir"
+            >
+              <RefreshCw className="w-4 h-4" />
+              <span>Kerjakan Ulang Kuis</span>
+            </button>
           </div>
         )}
       </div>

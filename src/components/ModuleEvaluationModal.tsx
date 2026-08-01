@@ -15,53 +15,68 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
   const [nama, setNama] = useState(profile.nama || '');
   const [nim, setNim] = useState(profile.nim || '');
   const [jenisKelamin, setJenisKelamin] = useState(profile.jenisKelamin || 'Pria');
-  const [pekerjaan, setPekerjaan] = useState(profile.pekerjaan || 'Mahasiswa');
-  const [instansi, setInstansi] = useState(profile.instansi || 'Universitas Negeri Jakarta');
+  const [pekerjaan, setPekerjaan] = useState(profile.pekerjaan || '');
+  const [instansi, setInstansi] = useState(profile.instansi || '');
 
-  // Likert scale state: default all 10 questions to 5 (Sangat Setuju) or 4 (Setuju)
-  const [likertAnswers, setLikertAnswers] = useState<Record<string, number>>(() => {
-    const initial: Record<string, number> = {};
-    defaultLikertQuestions.forEach(q => {
-      initial[q.id] = 5;
-    });
-    return initial;
-  });
+  // Likert scale state: start empty so respondent fills out from scratch
+  const [likertAnswers, setLikertAnswers] = useState<Record<string, number>>({});
 
   const [feedbackFitur, setFeedbackFitur] = useState('');
   const [feedbackSistem, setFeedbackSistem] = useState('');
   const [feedbackMateri, setFeedbackMateri] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const handleLikertChange = (qId: string, val: number) => {
     setLikertAnswers(prev => ({ ...prev, [qId]: val }));
+    if (validationError) setValidationError(null);
+  };
+
+  const handleResetForm = () => {
+    if (confirm('Apakah Anda yakin ingin mengosongkan seluruh jawaban kuisioner ini?')) {
+      setLikertAnswers({});
+      setFeedbackFitur('');
+      setFeedbackSistem('');
+      setFeedbackMateri('');
+      setValidationError(null);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setValidationError(null);
+
+    const totalQuestions = defaultLikertQuestions.length;
+    const answeredCount = Object.keys(likertAnswers).length;
+
+    if (answeredCount < totalQuestions) {
+      setValidationError(`Mohon lengkapi seluruh ${totalQuestions} pernyataan kuisioner sebelum mengirimkan data. (Saat ini terisi: ${answeredCount}/${totalQuestions})`);
+      return;
+    }
 
     // Calculate sub-ratings based on Likert answers
-    const materiQs = defaultLikertQuestions.filter(q => q.dimension === 'Materi').map(q => likertAnswers[q.id] || 5);
-    const desainQs = defaultLikertQuestions.filter(q => q.dimension === 'Desain').map(q => likertAnswers[q.id] || 5);
-    const fiturQs = defaultLikertQuestions.filter(q => q.dimension === 'Fitur').map(q => likertAnswers[q.id] || 5);
+    const materiQs = defaultLikertQuestions.filter(q => q.dimension === 'Materi').map(q => likertAnswers[q.id] || 0);
+    const desainQs = defaultLikertQuestions.filter(q => q.dimension === 'Desain').map(q => likertAnswers[q.id] || 0);
+    const fiturQs = defaultLikertQuestions.filter(q => q.dimension === 'Fitur').map(q => likertAnswers[q.id] || 0);
 
-    const avgMateri = Math.round((materiQs.reduce((a, b) => a + b, 0) / materiQs.length) * 10) / 10;
-    const avgSistem = Math.round((desainQs.reduce((a, b) => a + b, 0) / desainQs.length) * 10) / 10;
-    const avgFitur = Math.round((fiturQs.reduce((a, b) => a + b, 0) / fiturQs.length) * 10) / 10;
+    const avgMateri = Math.round((materiQs.reduce((a, b) => a + b, 0) / (materiQs.length || 1)) * 10) / 10;
+    const avgSistem = Math.round((desainQs.reduce((a, b) => a + b, 0) / (desainQs.length || 1)) * 10) / 10;
+    const avgFitur = Math.round((fiturQs.reduce((a, b) => a + b, 0) / (fiturQs.length || 1)) * 10) / 10;
 
     const evaluationData: ModuleEvaluation = {
       id: 'eval-' + Date.now(),
       studentName: nama.trim() || 'Peserta Literasi',
       studentNim: nim.trim() || '-',
       jenisKelamin,
-      pekerjaan,
-      instansi: instansi.trim() || 'UNJ',
+      pekerjaan: pekerjaan.trim() || 'Peserta',
+      instansi: instansi.trim() || '-',
       ratingFitur: avgFitur,
       ratingSistem: avgSistem,
       ratingMateri: avgMateri,
       likertAnswers,
-      feedbackFitur: feedbackFitur.trim() || 'Fitur interaktif SIFT dan game etika sangat memotivasi.',
-      feedbackSistem: feedbackSistem.trim() || 'Tampilan antarmuka sangat responsif, rapi, dan nyaman dibaca.',
-      feedbackMateri: feedbackMateri.trim() || 'Materi etika informasi disajikan komprehensif dan relevan.',
+      feedbackFitur: feedbackFitur.trim() || '-',
+      feedbackSistem: feedbackSistem.trim() || '-',
+      feedbackMateri: feedbackMateri.trim() || '-',
       submittedAt: new Date().toISOString()
     };
 
@@ -174,13 +189,27 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
 
                 <div>
                   <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">
-                    Instansi / Perguruan Tinggi
+                    Pekerjaan *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={pekerjaan}
+                    onChange={(e) => setPekerjaan(e.target.value)}
+                    placeholder="misal: Mahasiswa / Dosen / Guru / Umum"
+                    className="w-full p-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl font-medium focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Instansi / Perguruan Tinggi / Sekolah
                   </label>
                   <input
                     type="text"
                     value={instansi}
                     onChange={(e) => setInstansi(e.target.value)}
-                    placeholder="Nama Universitas / Instansi"
+                    placeholder="Kosongkan jika tidak ada / misal: Universitas Negeri Jakarta"
                     className="w-full p-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 rounded-xl font-medium focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
@@ -189,17 +218,24 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
 
             {/* Likert Scale Questions */}
             <div className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
                 <div>
-                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white font-serif">
-                    2. Pertanyaan Kuisioner Penelitian (Skala Likert)
+                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white font-serif flex items-center gap-2">
+                    <span>2. Pertanyaan Kuisioner Penelitian (Skala Likert)</span>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+                      Object.keys(likertAnswers).length === defaultLikertQuestions.length
+                        ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                        : 'bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30'
+                    }`}>
+                      Terisi {Object.keys(likertAnswers).length} / {defaultLikertQuestions.length} Pernyataan
+                    </span>
                   </h4>
-                  <p className="text-[11px] text-slate-500">
-                    Pilih salah satu skala dari 1 (Sangat Tidak Setuju) sampai 5 (Sangat Setuju) untuk setiap pernyataan.
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Pilih salah satu skala dari 1 (Sangat Tidak Setuju) sampai 5 (Sangat Setuju) untuk setiap pernyataan berikut.
                   </p>
                 </div>
 
-                <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 p-2 rounded-xl">
+                <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 p-2 rounded-xl self-start sm:self-auto">
                   <span className="text-rose-500">1: STS</span> • 
                   <span className="text-orange-500">2: TS</span> • 
                   <span className="text-amber-500">3: CS</span> • 
@@ -207,6 +243,12 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
                   <span className="text-emerald-500">5: SS</span>
                 </div>
               </div>
+
+              {validationError && (
+                <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-bold flex items-center gap-2 animate-pulse">
+                  <span>⚠️ {validationError}</span>
+                </div>
+              )}
 
               {dimensions.map((dim, dimIdx) => {
                 const dimQuestions = defaultLikertQuestions.filter(q => q.dimension === dim.name);
@@ -220,46 +262,64 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
                     </div>
 
                     <div className="space-y-4">
-                      {dimQuestions.map((q, qIdx) => (
-                        <div key={q.id} className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-                          <p className="font-semibold text-slate-800 dark:text-slate-200 text-xs leading-relaxed">
-                            <span className="font-bold text-indigo-500 mr-1.5">{qIdx + 1}.</span>
-                            {q.statement}
-                          </p>
+                      {dimQuestions.map((q, qIdx) => {
+                        const isAnswered = likertAnswers[q.id] !== undefined;
+                        return (
+                          <div key={q.id} className={`p-3.5 rounded-xl bg-white dark:bg-slate-900 border transition-all space-y-3 ${
+                            isAnswered
+                              ? 'border-slate-200 dark:border-slate-800'
+                              : 'border-amber-400/50 dark:border-amber-500/30 shadow-xs'
+                          }`}>
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="font-semibold text-slate-800 dark:text-slate-200 text-xs leading-relaxed">
+                                <span className="font-bold text-indigo-500 mr-1.5">{qIdx + 1}.</span>
+                                {q.statement}
+                              </p>
+                              {isAnswered ? (
+                                <span className="shrink-0 px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold text-[9px] uppercase">
+                                  ✓ Terisi ({likertAnswers[q.id]})
+                                </span>
+                              ) : (
+                                <span className="shrink-0 px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 font-extrabold text-[9px] uppercase">
+                                  Belum Diisi
+                                </span>
+                              )}
+                            </div>
 
-                          {/* 5-point Likert buttons */}
-                          <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
-                            {optionsScale.map((opt) => {
-                              const isSelected = likertAnswers[q.id] === opt.value;
-                              return (
-                                <button
-                                  key={opt.value}
-                                  type="button"
-                                  onClick={() => handleLikertChange(q.id, opt.value)}
-                                  className={`p-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 ${
-                                    isSelected
-                                      ? opt.value === 5
-                                        ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-500/20 font-extrabold'
-                                        : opt.value === 4
-                                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-500/20 font-extrabold'
-                                        : opt.value === 3
-                                        ? 'bg-amber-600 text-white border-amber-500 shadow-md shadow-amber-500/20 font-extrabold'
-                                        : opt.value === 2
-                                        ? 'bg-orange-600 text-white border-orange-500 shadow-md font-extrabold'
-                                        : 'bg-rose-600 text-white border-rose-500 shadow-md font-extrabold'
-                                      : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
-                                  }`}
-                                >
-                                  <span className="text-xs font-black">{opt.value}</span>
-                                  <span className="text-[9px] font-bold uppercase tracking-tight truncate max-w-full">
-                                    {opt.label}
-                                  </span>
-                                </button>
-                              );
-                            })}
+                            {/* 5-point Likert buttons */}
+                            <div className="grid grid-cols-5 gap-1.5 sm:gap-2">
+                              {optionsScale.map((opt) => {
+                                const isSelected = likertAnswers[q.id] === opt.value;
+                                return (
+                                  <button
+                                    key={opt.value}
+                                    type="button"
+                                    onClick={() => handleLikertChange(q.id, opt.value)}
+                                    className={`p-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-1 cursor-pointer ${
+                                      isSelected
+                                        ? opt.value === 5
+                                          ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-500/20 font-extrabold scale-102'
+                                          : opt.value === 4
+                                          ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-500/20 font-extrabold scale-102'
+                                          : opt.value === 3
+                                          ? 'bg-amber-600 text-white border-amber-500 shadow-md shadow-amber-500/20 font-extrabold scale-102'
+                                          : opt.value === 2
+                                          ? 'bg-orange-600 text-white border-orange-500 shadow-md font-extrabold scale-102'
+                                          : 'bg-rose-600 text-white border-rose-500 shadow-md font-extrabold scale-102'
+                                        : 'bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:border-indigo-300'
+                                    }`}
+                                  >
+                                    <span className="text-xs font-black">{opt.value}</span>
+                                    <span className="text-[9px] font-bold uppercase tracking-tight truncate max-w-full">
+                                      {opt.label}
+                                    </span>
+                                  </button>
+                                );
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 );
@@ -269,7 +329,7 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
             {/* Qualitative Feedbacks */}
             <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-4">
               <h4 className="font-extrabold text-sm text-slate-900 dark:text-white font-serif border-b border-slate-200 dark:border-slate-800 pb-2">
-                3. Saran & Masukan Kualitatif Responden
+                3. Saran & Masukan Kualitatif Responden (Opsional)
               </h4>
 
               <div className="space-y-3">
@@ -314,21 +374,31 @@ export const ModuleEvaluationModal: React.FC<ModuleEvaluationModalProps> = ({ pr
               </div>
             </div>
 
-            <div className="pt-3 flex items-center justify-end gap-3">
+            <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 dark:border-slate-800">
               <button
                 type="button"
-                onClick={onClose}
-                className="px-5 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-xs hover:bg-slate-300 transition-colors"
+                onClick={handleResetForm}
+                className="px-4 py-2.5 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold rounded-xl text-xs hover:bg-rose-100 transition-colors border border-rose-200 dark:border-rose-900/50 cursor-pointer"
               >
-                Batal
+                Kosongkan Form
               </button>
-              <button
-                type="submit"
-                className="px-7 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold rounded-xl text-xs transition-colors shadow-lg shadow-indigo-500/25 flex items-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                <span>Simpan & Kirim Kuisioner Research</span>
-              </button>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-5 py-2.5 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold rounded-xl text-xs hover:bg-slate-300 transition-colors cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  className="px-7 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold rounded-xl text-xs transition-colors shadow-lg shadow-indigo-500/25 flex items-center gap-2 cursor-pointer"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Simpan & Kirim Kuisioner Research</span>
+                </button>
+              </div>
             </div>
           </form>
         )}

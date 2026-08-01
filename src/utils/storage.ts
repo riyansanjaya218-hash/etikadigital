@@ -177,12 +177,18 @@ export function getStudentKey(profile?: StudentProfile): string {
 export function getStoredProgress(profile?: StudentProfile): ProgressState {
   try {
     const activeProfile = profile || getStoredProfile();
+    if (!activeProfile || !activeProfile.isRegistered || !activeProfile.nama) {
+      return { ...defaultProgress };
+    }
     const studentKey = getStudentKey(activeProfile);
-    const raw = localStorage.getItem(`${STORAGE_KEYS.PROGRESS}_${studentKey}`) || localStorage.getItem(STORAGE_KEYS.PROGRESS);
-    if (!raw) return defaultProgress;
+    if (studentKey === 'default') {
+      return { ...defaultProgress };
+    }
+    const raw = localStorage.getItem(`${STORAGE_KEYS.PROGRESS}_${studentKey}`);
+    if (!raw) return { ...defaultProgress };
     return { ...defaultProgress, ...JSON.parse(raw) };
   } catch {
-    return defaultProgress;
+    return { ...defaultProgress };
   }
 }
 
@@ -194,7 +200,9 @@ export function saveStoredProgress(progress: ProgressState, profile?: StudentPro
       ...progress,
       lastUpdated: new Date().toISOString()
     };
-    localStorage.setItem(`${STORAGE_KEYS.PROGRESS}_${studentKey}`, JSON.stringify(updated));
+    if (activeProfile && activeProfile.isRegistered && activeProfile.nama && studentKey !== 'default') {
+      localStorage.setItem(`${STORAGE_KEYS.PROGRESS}_${studentKey}`, JSON.stringify(updated));
+    }
     localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(updated));
   } catch (e) {
     console.error('Failed to save progress:', e);
@@ -231,9 +239,9 @@ export function calculateCompletionPercentage(progress: ProgressState, totalUnit
 }
 
 export function resetAllData(): void {
-  localStorage.removeItem(STORAGE_KEYS.PROFILE);
-  localStorage.removeItem(STORAGE_KEYS.PROGRESS);
-  localStorage.removeItem(STORAGE_KEYS.PLAGIARISM_REPORTS);
-  localStorage.removeItem(STORAGE_KEYS.STUDENTS_LIST);
-  localStorage.removeItem(STORAGE_KEYS.EVALUATIONS);
+  try {
+    localStorage.clear();
+  } catch (e) {
+    console.error('Failed to clear localStorage:', e);
+  }
 }

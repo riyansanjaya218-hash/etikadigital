@@ -158,19 +158,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   const handleExportCsv = () => {
+    const listToExport = registeredStudents.length > 0 ? registeredStudents : [studentProfile];
+    const headers = ['Nama Peserta', 'NIM', 'Jenis Kelamin', 'Pekerjaan', 'Instansi', 'Email', 'Unit Selesai', 'Nilai Evaluasi Akhir', 'Status Lulus', 'Tanggal Sertifikat'];
+    
     const csvRows = [
-      ['Nama Peserta', 'NIM', 'Kelas', 'Instansi', 'Email', 'Unit Selesai', 'Nilai Evaluasi Akhir', 'Status Lulus', 'Tanggal Sertifikat'],
-      [
-        `"${studentProfile.nama}"`,
-        `"${studentProfile.nim}"`,
-        `"${studentProfile.kelas}"`,
-        `"${studentProfile.instansi}"`,
-        `"${studentProfile.email}"`,
+      headers,
+      ...listToExport.map(st => [
+        `"${st.nama || '-'}"`,
+        `"${st.nim || '-'}"`,
+        `"${st.jenisKelamin || '-'}"`,
+        `"${st.pekerjaan || '-'}"`,
+        `"${st.instansi || '-'}"`,
+        `"${st.email || '-'}"`,
         `"${progress.completedUnits.length}/5"`,
         `"${progress.finalExamScore ?? 'Belum Ujian'}"`,
         `"${progress.finalExamPassed ? 'Lulus' : 'Belum Lulus'}"`,
         `"${progress.certificateIssuedDate || '-'}"`
-      ]
+      ])
     ];
 
     const csvContent = "data:text/csv;charset=utf-8," + csvRows.map(e => e.join(",")).join("\n");
@@ -441,10 +445,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <thead>
                   <tr className="bg-slate-950/80 text-slate-200 font-bold border-b border-white/10">
                     <th className="p-3">Nama Peserta</th>
-                    <th className="p-3">NIM / ID</th>
-                    <th className="p-3">Kelas / Jabatan</th>
-                    <th className="p-3">Instansi</th>
-                    <th className="p-3">Email</th>
+                    <th className="p-3">Jenis Kelamin</th>
+                    <th className="p-3">Pekerjaan</th>
+                    <th className="p-3">Instansi / Sekolah</th>
                     <th className="p-3">Tanggal Daftar</th>
                     <th className="p-3">Status Sertifikat</th>
                     <th className="p-3 text-center">Aksi</th>
@@ -453,7 +456,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <tbody className="divide-y divide-white/5 font-medium">
                   {registeredStudents.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center text-slate-400 font-serif">
+                      <td colSpan={7} className="p-8 text-center text-slate-400 font-serif">
                         Belum ada data identitas peserta terdaftar.
                       </td>
                     </tr>
@@ -461,10 +464,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     registeredStudents.map((st, i) => (
                       <tr key={i} className="hover:bg-white/5 transition-colors">
                         <td className="p-3 font-bold text-white">{st.nama}</td>
-                        <td className="p-3 font-mono text-slate-300">{st.nim || '-'}</td>
-                        <td className="p-3 text-slate-300">{st.kelas}</td>
-                        <td className="p-3 text-slate-300">{st.instansi}</td>
-                        <td className="p-3 text-slate-300 font-mono">{st.email}</td>
+                        <td className="p-3 text-slate-300">{st.jenisKelamin || '-'}</td>
+                        <td className="p-3 text-amber-300 font-semibold">{st.pekerjaan || '-'}</td>
+                        <td className="p-3 text-slate-300">{st.instansi || '-'}</td>
                         <td className="p-3 text-slate-400 text-[11px]">
                           {new Date(st.registeredAt || Date.now()).toLocaleDateString('id-ID')}
                         </td>
