@@ -1,5 +1,5 @@
 {
-  "name": "E-Modul Literasi Digital & Etika Informasi",
+  "name": "E-Modul Etika Informasi",
   "description": "E-Modul Pembelajaran Interaktif dengan 5 Unit Materi, Video Universal, Lab SIFT, Cek Plagiarisme, Game Etika, Kuis Evaluasi, & Dashboard Admin.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

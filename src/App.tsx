@@ -115,7 +115,7 @@ export default function App() {
   // Reset Progress
   const handleResetProgress = () => {
     resetAllData();
-    setProfile(defaultProfile);
+    setProfile(emptyProfile);
     setProgress(defaultProgress);
     setAdminConfig(defaultAdminConfig);
     setUnits(defaultUnits);

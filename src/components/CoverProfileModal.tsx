@@ -28,9 +28,13 @@ export const CoverProfileModal: React.FC<CoverProfileModalProps> = ({
   onStartLearning,
   onSwitchNewStudent
 }) => {
-  const [formData, setFormData] = useState<StudentProfile>(profile);
+  const [formData, setFormData] = React.useState<StudentProfile>(profile);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+
+  React.useEffect(() => {
+    setFormData(profile);
+  }, [profile]);
 
   const colors = ['#0f172a', '#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899'];
   const completionPercentage = calculateCompletionPercentage(progress);
