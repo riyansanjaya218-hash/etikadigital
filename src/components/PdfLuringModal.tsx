@@ -9,7 +9,7 @@ import {
   GraduationCap, UserCheck, HelpCircle, Check, FileCheck
 } from 'lucide-react';
 import { AdminConfig, LearningUnit, ProgressState, StudentProfile } from '../types';
-import { defaultFinalQuestions, defaultLikertQuestions } from '../data/defaultData';
+import { defaultAdminConfig, defaultFinalQuestions, defaultLikertQuestions, defaultUnits } from '../data/defaultData';
 import { QrCodeSvg } from './QrCodeSvg';
 
 interface PdfLuringModalProps {
@@ -35,8 +35,19 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
   const [downloadProgress, setDownloadProgress] = useState<string>('');
 
   const printableRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const totalBookPages = 24;
   const optionLetters = ['A', 'B', 'C', 'D'];
+
+  const safeUnits = (units && units.length >= 5) ? units.slice(0, 5) : defaultUnits;
+
+  // Auto scroll to top when changing page or view mode so pages open cleanly from top
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentPage, viewMode]);
 
   const playPageTurnSound = () => {
     if (!soundEnabled) return;
@@ -242,7 +253,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-lg flex justify-center p-2 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
+    <div ref={scrollContainerRef} className="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-lg flex justify-center p-2 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
       
       {/* Global CSS Print Rules */}
       <style>{`
@@ -744,7 +755,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             {/* ==========================================
                 HALAMAN 5 SAMPAI 19: 5 UNIT PEMBELAJARAN (3 HALAMAN PER UNIT)
                ========================================== */}
-            {units.map((unit, uIdx) => {
+            {safeUnits.map((unit, uIdx) => {
               const coverPageNum = 5 + (uIdx * 3);
               const materiPageNum = 6 + (uIdx * 3);
               const kuisPageNum = 7 + (uIdx * 3);
@@ -1092,9 +1103,10 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                   <div className="grid grid-cols-2 gap-4 border border-slate-300 p-4 rounded-xl mt-4 bg-slate-50">
                     <div className="space-y-1 text-xs">
                       <span className="font-bold text-slate-900 block font-serif">Identitas Responden:</span>
-                      <p>Nama: {profile.fullName || '...........................................'}</p>
-                      <p>NIM: {profile.studentId || '...........................................'}</p>
-                      <p>Prodi: {profile.studyProgram || '...........................................'}</p>
+                      <p>Nama: {profile.nama || '...........................................'}</p>
+                      <p>NIM / ID: {profile.nim || '...........................................'}</p>
+                      <p>Pekerjaan: {profile.pekerjaan || '...........................................'}</p>
+                      {profile.instansi && <p>Instansi: {profile.instansi}</p>}
                     </div>
                     <div className="text-center space-y-8 text-xs font-sans">
                       <p>Jakarta, .............................. 2026</p>
@@ -1111,6 +1123,75 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
 
           </div>
         </div>
+
+        {/* Footer Navigation Bar for Flipbook Mode */}
+        {viewMode === 'flipbook' && (
+          <div className="mt-4 space-y-3 print:hidden bg-slate-950 text-white p-4 rounded-2xl border border-slate-800 shadow-xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+              <button
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+                className="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-amber-400 text-white hover:text-slate-950 disabled:opacity-30 font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed border border-slate-700"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span>Halaman Sebelumnya</span>
+              </button>
+
+              <div className="text-center">
+                <span className="font-mono text-xs font-black text-amber-300 block">
+                  HALAMAN {currentPage} DARI {totalBookPages}
+                </span>
+                <span className="text-[11px] text-slate-300 font-serif line-clamp-1 max-w-md">
+                  {chapterList.find((c) => c.page === currentPage)?.title}
+                </span>
+              </div>
+
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalBookPages}
+                className="w-full sm:w-auto px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 disabled:opacity-30 font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed border border-amber-300"
+              >
+                <span>Halaman Selanjutnya</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Quick Chapter Shortcuts */}
+            <div className="pt-2 border-t border-slate-800">
+              <span className="text-[10px] font-mono text-slate-400 uppercase block mb-1.5 font-bold">
+                Pintas Cepat Bab & Halaman:
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  { p: 1, label: 'Sampul (1)' },
+                  { p: 2, label: 'Pengantar (2)' },
+                  { p: 3, label: 'Petunjuk (3)' },
+                  { p: 4, label: 'Peta Konsep (4)' },
+                  { p: 5, label: 'BAB I (5)' },
+                  { p: 8, label: 'BAB II (8)' },
+                  { p: 11, label: 'BAB III (11)' },
+                  { p: 14, label: 'BAB IV (14)' },
+                  { p: 17, label: 'BAB V (17)' },
+                  { p: 20, label: 'Post-Test (20)' },
+                  { p: 22, label: 'Video (22)' },
+                  { p: 23, label: 'Kuesioner (23)' },
+                ].map((item) => (
+                  <button
+                    key={item.p}
+                    onClick={() => goToPage(item.p)}
+                    className={`px-2.5 py-1 rounded-lg text-[10px] font-mono font-bold transition-all cursor-pointer border ${
+                      currentPage === item.p || (currentPage >= item.p && currentPage < item.p + 3 && item.p >= 5 && item.p <= 17)
+                        ? 'bg-amber-400 text-slate-950 border-amber-300 shadow-sm'
+                        : 'bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border-slate-700'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Footer Navigation Bar for A4 Mode */}
         {viewMode === 'print' && (
