@@ -1,5 +1,11 @@
-import React from 'react';
-import { X, Printer, Video, BookOpen, ShieldCheck, Award, ExternalLink, Key, GraduationCap, UserCheck, HelpCircle, Sparkles, Download, Layers, CheckCircle, AlertTriangle, FileText, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  X, Printer, Video, BookOpen, ShieldCheck, Award, ExternalLink, Key, 
+  GraduationCap, UserCheck, HelpCircle, Sparkles, Download, Layers, 
+  CheckCircle, AlertTriangle, FileText, Check, ChevronLeft, ChevronRight, 
+  RotateCcw, Volume2, VolumeX, Play, Pause, BookOpenCheck, List, Eye
+} from 'lucide-react';
 import { AdminConfig, LearningUnit, ProgressState, StudentProfile } from '../types';
 import { defaultFinalQuestions, defaultLikertQuestions } from '../data/defaultData';
 import { QrCodeSvg } from './QrCodeSvg';
@@ -337,23 +343,147 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
   progress,
   onClose
 }) => {
+  const [viewMode, setViewMode] = useState<'flipbook' | 'print'>('flipbook');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isAutoplay, setIsAutoplay] = useState<boolean>(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+
   const handlePrint = () => {
     window.print();
   };
 
   const optionLetters = ['A', 'B', 'C', 'D'];
 
-  // Dynamic Online Access URL (automatically updates depending on hosting origin/location)
+  // Dynamic Online Access URL
   const currentOnlineUrl = typeof window !== 'undefined' 
     ? (window.location.origin + window.location.pathname).replace(/\/$/, '')
     : 'https://e-modul-etika-informasi.com';
 
-  // Total pages calculation for multi-page book:
-  // Cover (1) + Catalog/CPMK (1) + Petunjuk (1) + Peta Konsep (1) + (5 units * 3 pages per unit = 15) + PostTest Part 1 (1) + PostTest Part 2 (1) + Appendix Video (1) + Evaluasi Page 1 (1) + Evaluasi Page 2 (1) = 24 pages total
+  // Total pages calculation: 24 pages
   const totalBookPages = 4 + (units.length * 3) + 5;
 
+  // Web Audio API paper turn sound effect
+  const playPageTurnSound = () => {
+    if (!soundEnabled) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const bufferSize = ctx.sampleRate * 0.12;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.3));
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 1100;
+      filter.Q.value = 1.6;
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      noise.start();
+    } catch (e) {
+      // Audio playback fails silently if user hasn't interacted yet
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalBookPages) {
+      setCurrentPage((prev) => prev + 1);
+      playPageTurnSound();
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+      playPageTurnSound();
+    }
+  };
+
+  const goToPage = (pageNum: number) => {
+    if (pageNum >= 1 && pageNum <= totalBookPages) {
+      setCurrentPage(pageNum);
+      playPageTurnSound();
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+        handleNextPage();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        handlePrevPage();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage, totalBookPages, soundEnabled]);
+
+  // Autoplay timer
+  useEffect(() => {
+    let interval: any;
+    if (isAutoplay && viewMode === 'flipbook') {
+      interval = setInterval(() => {
+        setCurrentPage((prev) => {
+          const next = prev >= totalBookPages ? 1 : prev + 1;
+          playPageTurnSound();
+          return next;
+        });
+      }, 4000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isAutoplay, viewMode, totalBookPages, soundEnabled]);
+
+  const chapterList = [
+    { page: 1, title: 'Halaman 1: Sampul / Cover Utama Modul' },
+    { page: 2, title: 'Halaman 2: Kata Pengantar & Profil Modul' },
+    { page: 3, title: 'Halaman 3: Petunjuk Penggunaan & Alur Luring' },
+    { page: 4, title: 'Halaman 4: Peta Konsep Pembelajaran & CPMK' },
+    { page: 5, title: 'Halaman 5: BAB I Cover - Etika & Hak Cipta' },
+    { page: 6, title: 'Halaman 6: BAB I Materi & Infografis' },
+    { page: 7, title: 'Halaman 7: BAB I Latihan Kuis & Kunci Jawaban' },
+    { page: 8, title: 'Halaman 8: BAB II Cover - Keamanan Informasi' },
+    { page: 9, title: 'Halaman 9: BAB II Materi & Infografis' },
+    { page: 10, title: 'Halaman 10: BAB II Latihan Kuis & Kunci Jawaban' },
+    { page: 11, title: 'Halaman 11: BAB III Cover - Hoaks & Cek Fakta' },
+    { page: 12, title: 'Halaman 12: BAB III Materi & Infografis' },
+    { page: 13, title: 'Halaman 13: BAB III Latihan Kuis & Kunci Jawaban' },
+    { page: 14, title: 'Halaman 14: BAB IV Cover - Literasi Digital AI' },
+    { page: 15, title: 'Halaman 15: BAB IV Materi & Infografis' },
+    { page: 16, title: 'Halaman 16: BAB IV Latihan Kuis & Kunci Jawaban' },
+    { page: 17, title: 'Halaman 17: BAB V Cover - AI & Integritas Akademik' },
+    { page: 18, title: 'Halaman 18: BAB V Materi & Infografis' },
+    { page: 19, title: 'Halaman 19: BAB V Latihan Kuis & Kunci Jawaban' },
+    { page: 20, title: 'Halaman 20: BAB VI Post-Test Bagian 1 (Soal #1 - #5)' },
+    { page: 21, title: 'Halaman 21: BAB VI Post-Test Bagian 2 (Soal #6 - #10)' },
+    { page: 22, title: 'Halaman 22: Lampiran Video E-Learning & SIFT' },
+    { page: 23, title: 'Halaman 23: Kuesioner Evaluasi Luring Bagian 1' },
+    { page: 24, title: 'Halaman 24: Kuesioner Evaluasi Luring Bagian 2' },
+  ];
+
+  const currentChapter = chapterList.find((c) => c.page === currentPage) || chapterList[0];
+
+  const getPageClass = (pageNumber: number) => {
+    const isSelected = currentPage === pageNumber;
+    return `pdf-book-page ${pageNumber === 1 ? 'pdf-book-page-first' : ''} ${
+      viewMode === 'flipbook'
+        ? (isSelected ? 'flex flex-col justify-between active-page' : 'hidden print:flex print:flex-col print:justify-between')
+        : 'flex flex-col justify-between'
+    }`;
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex justify-center p-1 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
+    <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex justify-center p-1 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
       {/* Embedded High-Quality Print Styles for Direct Flipbook PDF Generation */}
       <style>{`
         @media print {
@@ -419,39 +549,42 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
         }
       `}</style>
 
-      <div className="bg-white text-slate-900 rounded-2xl sm:rounded-3xl max-w-5xl w-full p-3 sm:p-10 space-y-4 sm:space-y-6 relative shadow-2xl my-1 sm:my-4 print:shadow-none print:border-none print:m-0 print:p-0 print:max-w-none">
+      <div className="bg-slate-900 text-slate-100 rounded-2xl sm:rounded-3xl max-w-5xl w-full p-2 sm:p-6 space-y-4 relative shadow-2xl my-1 sm:my-4 print:bg-white print:text-slate-900 print:shadow-none print:border-none print:m-0 print:p-0 print:max-w-none">
         
-        {/* Floating Non-Print Control Toolbar */}
-        <div className="space-y-2.5 print:hidden sticky top-0 bg-white/95 backdrop-blur z-20 pt-1 pb-3 border-b border-slate-200">
+        {/* Interactive Control Toolbar */}
+        <div className="space-y-3 print:hidden sticky top-0 bg-slate-900/95 backdrop-blur z-30 pt-1 pb-3 border-b border-slate-800">
+          
+          {/* Header Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div className="flex items-center gap-2.5">
-              <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-indigo-950 text-amber-300 shadow-md shrink-0">
-                <Printer className="w-5 h-5 sm:w-6 sm:h-6" />
+              <div className="p-2 sm:p-2.5 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 text-slate-950 shadow-md shrink-0">
+                <BookOpenCheck className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
               <div>
-                <h3 className="font-black text-sm sm:text-base text-slate-900 font-serif flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span>Modul Ajar Cetak PDF & Flipbook (24 Halaman Resmi)</span>
-                  <span className="text-[9px] sm:text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-mono font-bold uppercase">
-                    SIAP FLIPBOOK 3D
+                <h3 className="font-black text-sm sm:text-base text-white font-serif flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span>Modul Ajar Cetak & Flipbook 3D (24 Halaman)</span>
+                  <span className="text-[9px] sm:text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-mono font-bold uppercase shadow-xs">
+                    FLIPBOOK INTERAKTIF
                   </span>
                 </h3>
-                <p className="text-[11px] sm:text-xs text-slate-600 font-medium line-clamp-1 sm:line-clamp-none">
-                  24 Halaman Buku Resmi • Sampul • CPMK • Peta Konsep • 5 Bab Materi + Infografis • Kuis & Jawaban • Post-Test • Kuesioner Evaluasi
+                <p className="text-[11px] sm:text-xs text-slate-300 font-medium">
+                  Gunakan tombol panah / usap layar untuk membalik halaman layaknya buku fisik.
                 </p>
               </div>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
                 onClick={handlePrint}
-                className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 hover:from-indigo-900 hover:to-indigo-800 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-400/50"
+                className="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-300/60"
               >
-                <Download className="w-4 h-4 text-amber-300 animate-bounce" />
+                <Download className="w-4 h-4 text-slate-950 animate-bounce" />
                 <span>📥 DOWNLOAD PDF LANGSUNG (24 Hlm)</span>
               </button>
               <button
                 onClick={onClose}
-                className="p-2.5 sm:p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors shrink-0"
+                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shrink-0 border border-slate-700"
                 title="Tutup Modal"
               >
                 <X className="w-5 h-5" />
@@ -459,26 +592,149 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
           </div>
 
-          {/* User Guidance Callout Box for Direct PDF Download */}
-          <div className="p-2.5 sm:p-3 rounded-xl bg-amber-50 border border-amber-300 text-slate-800 text-xs flex items-start gap-2 font-sans shadow-xs">
-            <Sparkles className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-            <div className="space-y-0.5 text-[11px] sm:text-xs">
-              <strong className="text-amber-950 font-bold block">Petunjuk Unduh PDF Langsung (Format Buku Flipbook A4):</strong>
-              <p className="text-[10.5px] sm:text-[11px] text-slate-700 leading-relaxed">
-                Klik <span className="font-bold text-indigo-950">"DOWNLOAD PDF LANGSUNG"</span>, pilih Tujuan/Destination <span className="font-extrabold text-amber-900 bg-amber-200/80 px-1 py-0.5 rounded">"Simpan sebagai PDF" ("Save as PDF")</span>. File PDF 24 halaman A4 presisi tinggi siap diunggah langsung ke software Flipbook (Heyzine, FlipPDF Pro, PubHTML5, Canva, dsb).
-              </p>
+          {/* Controls Bar Row: Mode Switcher, Chapter Jump, Sound, Autoplay */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-2 text-xs pt-1">
+            
+            {/* View Mode Switcher */}
+            <div className="sm:col-span-5 flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <button
+                onClick={() => setViewMode('flipbook')}
+                className={`flex-1 py-1.5 px-3 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+                  viewMode === 'flipbook'
+                    ? 'bg-amber-400 text-slate-950 shadow-md'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>📖 Flipbook 3D Reader</span>
+              </button>
+              <button
+                onClick={() => setViewMode('print')}
+                className={`flex-1 py-1.5 px-3 rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all ${
+                  viewMode === 'print'
+                    ? 'bg-amber-400 text-slate-950 shadow-md'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                <List className="w-3.5 h-3.5" />
+                <span>📄 Lihat Semua (A4)</span>
+              </button>
             </div>
+
+            {/* Jump To Chapter Selector */}
+            <div className="sm:col-span-4 flex items-center bg-slate-950 px-2 py-1 rounded-xl border border-slate-800">
+              <List className="w-4 h-4 text-amber-400 mr-2 shrink-0" />
+              <select
+                value={currentPage}
+                onChange={(e) => goToPage(Number(e.target.value))}
+                className="bg-transparent text-white text-xs font-medium focus:outline-none w-full cursor-pointer py-1"
+              >
+                {chapterList.map((ch) => (
+                  <option key={ch.page} value={ch.page} className="bg-slate-900 text-white">
+                    {ch.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Extra Interactive Toggles: Sound & Autoplay */}
+            <div className="sm:col-span-3 flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+              <button
+                onClick={() => setSoundEnabled(!soundEnabled)}
+                className={`flex-1 py-1 px-2 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all ${
+                  soundEnabled
+                    ? 'bg-indigo-900 text-amber-300 border border-indigo-700'
+                    : 'text-slate-500 hover:text-slate-300'
+                }`}
+                title={soundEnabled ? 'Matikan Efek Suara Kertas' : 'Aktifkan Efek Suara Kertas'}
+              >
+                {soundEnabled ? <Volume2 className="w-3.5 h-3.5 text-amber-400" /> : <VolumeX className="w-3.5 h-3.5" />}
+                <span>{soundEnabled ? 'Suara ON' : 'Suara OFF'}</span>
+              </button>
+
+              <button
+                onClick={() => setIsAutoplay(!isAutoplay)}
+                className={`flex-1 py-1 px-2 rounded-lg font-bold text-[11px] flex items-center justify-center gap-1 transition-all ${
+                  isAutoplay
+                    ? 'bg-amber-400 text-slate-950 border border-amber-300 animate-pulse'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+                title={isAutoplay ? 'Hentikan Putar Otomatis' : 'Putar Otomatis (4 Detik / Halaman)'}
+              >
+                {isAutoplay ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                <span>{isAutoplay ? 'Autoplay' : 'Auto'}</span>
+              </button>
+            </div>
+
           </div>
+
+          {/* User Guidance Banner */}
+          <div className="p-2 sm:p-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-200 text-xs flex items-center justify-between gap-2 shadow-xs">
+            <div className="flex items-center gap-2 text-[11px]">
+              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+              <span>
+                Navigasi Flipbook: <kbd className="px-1.5 py-0.5 bg-slate-900 border border-slate-600 rounded text-amber-300 font-mono text-[10px]">←</kbd> Halaman Lalu &nbsp;|&nbsp; <kbd className="px-1.5 py-0.5 bg-slate-900 border border-slate-600 rounded text-amber-300 font-mono text-[10px]">→</kbd> Halaman Selanjutnya
+              </span>
+            </div>
+            <span className="font-mono text-[10.5px] font-extrabold text-amber-300 bg-amber-950/60 border border-amber-800/60 px-2 py-0.5 rounded-md shrink-0">
+              Hal {currentPage} / {totalBookPages}
+            </span>
+          </div>
+
         </div>
 
-        {/* Printable Multi-Page Book Document Body */}
-        <div className="space-y-12 text-slate-900 font-sans print:space-y-0">
+        {/* 3D Flipbook Stage Wrapper */}
+        <div className="relative w-full">
+          
+          {/* Floating Navigation Arrow - Left */}
+          {viewMode === 'flipbook' && (
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="absolute -left-2 sm:left-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-slate-900/90 hover:bg-amber-400 text-white hover:text-slate-950 disabled:opacity-20 disabled:pointer-events-none transition-all shadow-2xl ring-2 ring-amber-400/40 print:hidden cursor-pointer"
+              title="Halaman Sebelumnya (Panah Kiri)"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Floating Navigation Arrow - Right */}
+          {viewMode === 'flipbook' && (
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalBookPages}
+              className="absolute -right-2 sm:right-2 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full bg-slate-900/90 hover:bg-amber-400 text-white hover:text-slate-950 disabled:opacity-20 disabled:pointer-events-none transition-all shadow-2xl ring-2 ring-amber-400/40 print:hidden cursor-pointer"
+              title="Halaman Selanjutnya (Panah Kanan)"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          )}
+
+          {/* Main Book Frame Container */}
+          <div className="relative bg-slate-950 p-1 sm:p-4 rounded-2xl border border-slate-800 shadow-2xl print:p-0 print:border-none print:shadow-none print:bg-white">
+            
+            {/* Spine Effect Overlay for 3D Depth */}
+            {viewMode === 'flipbook' && (
+              <div className="pointer-events-none absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-slate-950/40 via-slate-950/10 to-transparent z-20 border-r border-slate-700/20 print:hidden rounded-l-2xl" />
+            )}
+
+            {/* Book Body Page Renderer with Smooth Motion Animation */}
+            <div className="space-y-12 text-slate-900 font-sans print:space-y-0">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={viewMode === 'flipbook' ? currentPage : 'print-all'}
+                  initial={{ rotateY: viewMode === 'flipbook' ? -10 : 0, opacity: 0.9, scale: 0.99 }}
+                  animate={{ rotateY: 0, opacity: 1, scale: 1 }}
+                  exit={{ rotateY: viewMode === 'flipbook' ? 10 : 0, opacity: 0.9, scale: 0.99 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="w-full bg-white rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6),_6px_6px_0_#cbd5e1,_12px_12px_0_#94a3b8] print:shadow-none print:rounded-none print:bg-white"
+                >
 
           {/* ==========================================
               HALAMAN 1: COVER BUKU MODUL AJAR (COVER PAGE) - SIMPLIFIED & ELEGANT
              ========================================== */}
           <div 
-            className="pdf-book-page pdf-book-page-first border-4 sm:border-[6px] border-slate-900 rounded-none p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#FCFCFA] relative overflow-hidden print:border-2 print:border-slate-900 print:rounded-none page-break"
+            className={`${getPageClass(1)} border-4 sm:border-[6px] border-slate-900 rounded-none p-6 sm:p-10 space-y-6 bg-[#FCFCFA] relative overflow-hidden print:border-2 print:border-slate-900 print:rounded-none page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             {/* Institution Header */}
@@ -551,7 +807,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 2: KATA PENGANTAR (BAGIAN I)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
+            className={`${getPageClass(2)} space-y-4 pt-4 sm:pt-6 bg-[#FAF8F5] page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-5">
@@ -609,7 +865,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 3: PETUNJUK PENGGUNAAN MODUL (BAGIAN II)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
+            className={`${getPageClass(3)} space-y-4 pt-4 sm:pt-6 bg-[#FAF8F5] page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-4">
@@ -687,7 +943,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 4: PETA KONSEP PEMBELAJARAN (BAGIAN III)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
+            className={`${getPageClass(4)} space-y-4 pt-4 sm:pt-6 bg-[#FAF8F5] page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-6">
@@ -771,7 +1027,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     1. HALAMAN COVER/JUDUL BAB (SEPARASI HALAMAN)
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page border-4 sm:border-8 border-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 flex flex-col justify-between bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white relative overflow-hidden print:border-2 print:rounded-none page-break"
+                  className={`${getPageClass(pageCoverNum)} border-4 sm:border-8 border-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white relative overflow-hidden print:border-2 print:rounded-none page-break`}
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   {/* Top Badge */}
@@ -866,7 +1122,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     2. HALAMAN MATERI PEMBAHASAN & GAMBAR INFOGRAFIS EMBEDDED
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+                  className={`${getPageClass(pageMateriNum)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   <div className="space-y-3 sm:space-y-4">
@@ -942,7 +1198,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     3. HALAMAN LATIHAN KUIS & KUNCI JAWABAN BAB
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+                  className={`${getPageClass(pageKuisNum)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   <div className="space-y-3 sm:space-y-4">
@@ -1012,7 +1268,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               BAB VI: EVALUASI AKHIR (POST-TEST) BAGIAN 1 (SOAL 1-5)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            className={`${getPageClass(20)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-3 sm:space-y-4">
@@ -1079,7 +1335,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               BAB VI: EVALUASI AKHIR (POST-TEST) BAGIAN 2 (SOAL 6-10)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            className={`${getPageClass(21)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-3 sm:space-y-4">
@@ -1147,7 +1403,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN TERAKHIR: LAMPIRAN DIREKTORI VIDEO, SIFT, & REKAPITULASI
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            className={`${getPageClass(22)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-3 sm:space-y-4">
@@ -1294,7 +1550,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 23: INSTRUMEN EVALUASI BAGIAN 1 (IDENTITAS & PERTANYAAN 1-8)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            className={`${getPageClass(23)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
             style={{ pageBreakBefore: 'always', breakBefore: 'page' }}
           >
             <div className="space-y-3">
@@ -1408,7 +1664,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 24: INSTRUMEN EVALUASI BAGIAN 2 (PERTANYAAN 9-16 + SARAN & TANDA TANGAN)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            className={`${getPageClass(24)} space-y-3 sm:space-y-4 pt-4 sm:pt-6 page-break`}
             style={{ pageBreakBefore: 'always', breakBefore: 'page' }}
           >
             <div className="space-y-3">
@@ -1506,8 +1762,44 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
           </div>
 
-        </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+        {/* Bottom Navigation Control Bar (Flipbook Mode Only) */}
+        {viewMode === 'flipbook' && (
+          <div className="mt-6 flex items-center justify-between gap-4 max-w-4xl mx-auto print:hidden bg-slate-900/90 text-white p-3 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-md">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Sebelumnya</span>
+            </button>
+
+            <div className="text-center">
+              <span className="text-xs font-mono font-bold text-amber-400 block">
+                Halaman {currentPage} dari {totalBookPages}
+              </span>
+              <span className="text-[10px] text-slate-400 hidden sm:inline">
+                Gunakan Tombol Panah Kiri/Kanan pada Keyboard
+              </span>
+            </div>
+
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalBookPages}
+              className="px-4 py-2 bg-amber-400 text-slate-950 hover:bg-amber-300 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl text-xs font-bold font-mono transition-all flex items-center gap-1.5"
+            >
+              <span>Berikutnya</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 };
