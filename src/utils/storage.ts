@@ -12,16 +12,16 @@ const STORAGE_KEYS = {
 };
 
 export const defaultProfile: StudentProfile = {
-  nama: 'Udin Barudin',
-  jenisKelamin: 'Pria',
-  pekerjaan: 'Mahasiswa / Akademisi',
+  nama: '',
+  jenisKelamin: '',
+  pekerjaan: '',
   avatarColor: '#3b82f6',
   registeredAt: new Date().toISOString(),
-  isRegistered: true,
-  email: 'udinbarudin@fip.unj.ac.id',
-  instansi: 'Universitas Negeri Jakarta',
-  nim: '2024010012',
-  kelas: 'Kelas A'
+  isRegistered: false,
+  email: '',
+  instansi: '',
+  nim: '',
+  kelas: ''
 };
 
 export const emptyProfile: StudentProfile = {
@@ -30,7 +30,11 @@ export const emptyProfile: StudentProfile = {
   pekerjaan: '',
   avatarColor: '#3b82f6',
   registeredAt: new Date().toISOString(),
-  isRegistered: false
+  isRegistered: false,
+  email: '',
+  instansi: '',
+  nim: '',
+  kelas: ''
 };
 
 export const defaultProgress: ProgressState = {

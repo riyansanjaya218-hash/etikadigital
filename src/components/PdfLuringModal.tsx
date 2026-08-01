@@ -16,72 +16,58 @@ interface PdfLuringModalProps {
 const UnitDiagramGraphics: React.FC<{ unitNumber: number }> = ({ unitNumber }) => {
   if (unitNumber === 1) {
     return (
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-50 border-2 border-indigo-200 space-y-3 text-slate-900 my-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-indigo-200 pb-2">
-          <span className="text-[11px] font-black uppercase tracking-wider text-indigo-950 flex items-center gap-1.5">
-            <Layers className="w-4 h-4 text-indigo-700" />
+      <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-50 border border-indigo-200 space-y-2 text-slate-900 my-2 shadow-xs">
+        <div className="flex items-center justify-between border-b border-indigo-200 pb-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-indigo-950 flex items-center gap-1">
+            <Layers className="w-3.5 h-3.5 text-indigo-700" />
             <span>GAMBAR 1.1: MASKOT SIBER & HIERARKI KERANGKA KERJA ETIKA INFORMASI</span>
           </span>
-          <span className="text-[10px] font-mono font-bold text-indigo-800 bg-indigo-100 px-2 py-0.5 rounded">INFOGRAFIS KARTUN MATERI</span>
+          <span className="text-[9px] font-mono font-bold text-indigo-800 bg-indigo-100 px-1.5 py-0.5 rounded">INFOGRAFIS MATERI</span>
         </div>
 
         {/* Cartoon Illustration Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center bg-white p-3 rounded-xl border border-indigo-100 shadow-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 items-center bg-white p-2 rounded-lg border border-indigo-100">
           {/* Cartoon Character SVG */}
-          <div className="flex flex-col items-center justify-center p-2 bg-indigo-50 rounded-xl border border-indigo-200 text-center">
-            <svg viewBox="0 0 100 100" className="w-20 h-20">
-              {/* Background Glow */}
+          <div className="flex flex-col items-center justify-center p-1 bg-indigo-50 rounded-lg border border-indigo-200 text-center">
+            <svg viewBox="0 0 100 100" className="w-12 h-12">
               <circle cx="50" cy="50" r="45" fill="#e0e7ff" />
-              {/* Head */}
               <circle cx="50" cy="38" r="18" fill="#fbcfe8" stroke="#3730a3" strokeWidth="2" />
-              {/* Hair */}
               <path d="M 32 36 Q 50 18 68 36 Q 60 22 40 22 Z" fill="#312e81" />
-              {/* Eyes */}
               <circle cx="43" cy="38" r="2.5" fill="#1e1b4b" />
               <circle cx="57" cy="38" r="2.5" fill="#1e1b4b" />
               <circle cx="44" cy="37" r="0.8" fill="#ffffff" />
               <circle cx="58" cy="37" r="0.8" fill="#ffffff" />
-              {/* Smile */}
               <path d="M 44 46 Q 50 51 56 46" fill="none" stroke="#be185d" strokeWidth="2" strokeLinecap="round" />
-              {/* Body / Shirt */}
               <path d="M 28 85 Q 50 60 72 85 Z" fill="#4f46e5" stroke="#3730a3" strokeWidth="2" />
-              {/* Shield Icon in Hand */}
               <path d="M 50 62 L 62 67 L 62 78 Q 50 86 50 86 Q 50 86 38 78 L 38 67 Z" fill="#f59e0b" stroke="#78350f" strokeWidth="1.5" />
               <path d="M 50 66 L 50 82" stroke="#ffffff" strokeWidth="1.5" />
               <path d="M 42 72 L 58 72" stroke="#ffffff" strokeWidth="1.5" />
             </svg>
-            <span className="text-[10px] font-extrabold text-indigo-950 mt-1">Duta Siber UNJ</span>
-            <span className="text-[9px] text-indigo-700 font-bold">Maskot Literasi Digital</span>
+            <span className="text-[9px] font-extrabold text-indigo-950 mt-0.5">Duta Siber UNJ</span>
           </div>
 
           {/* Explanation Text */}
-          <div className="md:col-span-2 space-y-1.5 text-xs">
-            <div className="px-2.5 py-1 bg-indigo-600 text-white font-extrabold text-[10px] rounded-lg inline-block uppercase tracking-wider">
+          <div className="sm:col-span-2 space-y-1 text-[10.5px]">
+            <span className="px-2 py-0.5 bg-indigo-600 text-white font-extrabold text-[9px] rounded inline-block uppercase tracking-wider">
               Pesan Etis Duta Siber:
-            </div>
-            <p className="text-[11px] text-slate-800 leading-relaxed font-medium">
-              "Sebagai mahasiswi/a masa kini, etika informasi bukan sekadar peraturan kaku, melainkan kompas moral kita saat membagikan data, menulis karya ilmiah, dan berkomunikasi secara santun di media sosial!"
+            </span>
+            <p className="text-[10px] text-slate-800 leading-snug font-medium">
+              "Etika informasi bukan sekadar peraturan kaku, melainkan kompas moral kita saat membagikan data, menulis karya ilmiah, dan berkomunikasi secara santun di media sosial!"
             </p>
           </div>
         </div>
 
         {/* Pyramid Vector Graphic */}
-        <svg viewBox="0 0 600 200" className="w-full h-auto max-h-[170px]">
-          <polygon points="300,10 520,190 80,190" fill="#e0e7ff" stroke="#3730a3" strokeWidth="2.5" />
-          <line x1="210" y1="95" x2="390" y2="95" stroke="#3730a3" strokeWidth="2" />
-          <line x1="145" y1="145" x2="455" y2="145" stroke="#3730a3" strokeWidth="2" />
-
-          {/* Tier 1 Text */}
-          <text x="300" y="60" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 1: TANGGUNG JAWAB PRAKTIS SIBER</text>
-          <text x="300" y="76" textAnchor="middle" fill="#4338ca" fontSize="9">Anti-Plagiarisme • Verifikasi Hoaks • Pemanfaatan AI Etis</text>
-
-          {/* Tier 2 Text */}
-          <text x="300" y="118" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 2: PRINSIP ETIS (Kebenaran, Keadilan, Kerahasiaan Data)</text>
-
-          {/* Tier 3 Text */}
-          <text x="300" y="172" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 3: LANDASAN HUKUM & MORAL (Pancasila & UU ITE No. 1/2024)</text>
+        <svg viewBox="0 0 600 180" className="w-full h-auto max-h-[110px]">
+          <polygon points="300,10 520,170 80,170" fill="#e0e7ff" stroke="#3730a3" strokeWidth="2.5" />
+          <line x1="210" y1="85" x2="390" y2="85" stroke="#3730a3" strokeWidth="2" />
+          <line x1="145" y1="130" x2="455" y2="130" stroke="#3730a3" strokeWidth="2" />
+          <text x="300" y="52" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 1: TANGGUNG JAWAB PRAKTIS SIBER</text>
+          <text x="300" y="68" textAnchor="middle" fill="#4338ca" fontSize="9">Anti-Plagiarisme • Verifikasi Hoaks • Pemanfaatan AI Etis</text>
+          <text x="300" y="108" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 2: PRINSIP ETIS (Kebenaran, Keadilan, Kerahasiaan Data)</text>
+          <text x="300" y="152" textAnchor="middle" fill="#1e1b4b" fontSize="11" fontWeight="bold">TIER 3: LANDASAN HUKUM & MORAL (Pancasila & UU ITE No. 1/2024)</text>
         </svg>
-        <p className="text-[10.5px] italic text-slate-600 font-serif text-center pt-1">
+        <p className="text-[9.5px] italic text-slate-600 font-serif text-center">
           Gambar 1.1 Maskot Duta Etika Digital dan Piramida Tiga Tingkatan Etika Siber Masyarakat Informasi Indonesia.
         </p>
       </div>
@@ -90,76 +76,71 @@ const UnitDiagramGraphics: React.FC<{ unitNumber: number }> = ({ unitNumber }) =
 
   if (unitNumber === 2) {
     return (
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 border-2 border-amber-300 space-y-3 text-slate-900 my-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-amber-300 pb-2">
-          <span className="text-[11px] font-black uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-amber-700" />
+      <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 border border-amber-300 space-y-2 text-slate-900 my-2 shadow-xs">
+        <div className="flex items-center justify-between border-b border-amber-300 pb-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-amber-950 flex items-center gap-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
             <span>GAMBAR 2.1: MASKOT DETEKTIF SIFT & ALUR 4 LANGKAH CEK FAKTA</span>
           </span>
-          <span className="text-[10px] font-mono font-bold text-amber-900 bg-amber-200 px-2 py-0.5 rounded">INFOGRAFIS KARTUN MATERI</span>
+          <span className="text-[9px] font-mono font-bold text-amber-900 bg-amber-200 px-1.5 py-0.5 rounded">INFOGRAFIS MATERI</span>
         </div>
 
         {/* Detective Mascot Banner */}
-        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-amber-200 shadow-xs">
-          <svg viewBox="0 0 100 100" className="w-16 h-16 shrink-0">
+        <div className="flex items-center gap-2 bg-white p-2 rounded-lg border border-amber-200">
+          <svg viewBox="0 0 100 100" className="w-12 h-12 shrink-0">
             <circle cx="50" cy="50" r="45" fill="#fef3c7" />
-            {/* Detective Hat */}
             <path d="M 25 35 Q 50 15 75 35 L 85 40 L 15 40 Z" fill="#78350f" />
             <rect x="25" y="32" width="50" height="5" fill="#f59e0b" />
-            {/* Face */}
             <circle cx="50" cy="52" r="18" fill="#fde68a" stroke="#78350f" strokeWidth="1.5" />
-            {/* Eyes behind glasses */}
             <circle cx="43" cy="50" r="5" fill="none" stroke="#78350f" strokeWidth="1.5" />
             <circle cx="57" cy="50" r="5" fill="none" stroke="#78350f" strokeWidth="1.5" />
             <line x1="48" y1="50" x2="52" y2="50" stroke="#78350f" strokeWidth="1.5" />
             <circle cx="43" cy="50" r="2" fill="#1e1b4b" />
             <circle cx="57" cy="50" r="2" fill="#1e1b4b" />
-            {/* Smile */}
             <path d="M 45 60 Q 50 64 55 60" fill="none" stroke="#78350f" strokeWidth="1.5" strokeLinecap="round" />
-            {/* Magnifying Glass */}
             <circle cx="72" cy="65" r="10" fill="none" stroke="#b45309" strokeWidth="2.5" />
             <line x1="79" y1="72" x2="90" y2="83" stroke="#78350f" strokeWidth="3" strokeLinecap="round" />
           </svg>
-          <div className="space-y-1 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-amber-950 text-xs">Detektif Cek Fakta:</span>
-              <span className="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300">
+          <div className="space-y-0.5 text-[10.5px]">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-amber-950 text-[10px]">Detektif Cek Fakta:</span>
+              <span className="text-[9px] font-bold bg-amber-100 text-amber-900 px-1.5 py-0.2 rounded border border-amber-300">
                 Lensa Verifikasi
               </span>
             </div>
-            <p className="text-[11px] text-slate-800 leading-tight">
+            <p className="text-[10px] text-slate-800 leading-snug">
               "Sebelum membagikan kabar viral, gunakan metode SIFT! Berhentilah sejenak saat emosi terprovokasi, periksa kredibilitas sumber, cari liputan pembanding, dan lacak klaim asli foto atau videonya!"
             </p>
           </div>
         </div>
 
         {/* 4 Cards SIFT */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-center text-xs">
-          <div className="p-2.5 rounded-xl bg-white border-2 border-red-400 shadow-xs space-y-1">
-            <span className="w-8 h-8 rounded-full bg-red-600 text-white font-mono font-black text-sm inline-flex items-center justify-center shadow-md">S</span>
-            <strong className="block text-slate-900 text-xs">1. STOP</strong>
-            <p className="text-[10px] text-slate-600 font-medium">Berhenti sejenak, tahan emosi & provokasi judul umpan klik.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-0.5 text-center text-xs">
+          <div className="p-1.5 rounded-lg bg-white border border-red-300 space-y-0.5">
+            <span className="w-6 h-6 rounded-full bg-red-600 text-white font-mono font-black text-xs inline-flex items-center justify-center">S</span>
+            <strong className="block text-slate-900 text-[10px]">1. STOP</strong>
+            <p className="text-[9px] text-slate-600 leading-tight">Tahan emosi & provokasi judul umpan klik.</p>
           </div>
 
-          <div className="p-2.5 rounded-xl bg-white border-2 border-amber-400 shadow-xs space-y-1">
-            <span className="w-8 h-8 rounded-full bg-amber-500 text-white font-mono font-black text-sm inline-flex items-center justify-center shadow-md">I</span>
-            <strong className="block text-slate-900 text-xs">2. INVESTIGATE</strong>
-            <p className="text-[10px] text-slate-600 font-medium">Cek rekam jejak penulis, reputasi situs, dan keahlian narasumber.</p>
+          <div className="p-1.5 rounded-lg bg-white border border-amber-300 space-y-0.5">
+            <span className="w-6 h-6 rounded-full bg-amber-500 text-white font-mono font-black text-xs inline-flex items-center justify-center">I</span>
+            <strong className="block text-slate-900 text-[10px]">2. INVESTIGATE</strong>
+            <p className="text-[9px] text-slate-600 leading-tight">Cek rekam jejak & reputasi penulis/situs.</p>
           </div>
 
-          <div className="p-2.5 rounded-xl bg-white border-2 border-blue-400 shadow-xs space-y-1">
-            <span className="w-8 h-8 rounded-full bg-blue-600 text-white font-mono font-black text-sm inline-flex items-center justify-center shadow-md">F</span>
-            <strong className="block text-slate-900 text-xs">3. FIND COVERAGE</strong>
-            <p className="text-[10px] text-slate-600 font-medium">Cari berita pembanding dari media pers independen yang terverifikasi.</p>
+          <div className="p-1.5 rounded-lg bg-white border border-blue-300 space-y-0.5">
+            <span className="w-6 h-6 rounded-full bg-blue-600 text-white font-mono font-black text-xs inline-flex items-center justify-center">F</span>
+            <strong className="block text-slate-900 text-[10px]">3. FIND COVERAGE</strong>
+            <p className="text-[9px] text-slate-600 leading-tight">Cari pembanding media pers independen.</p>
           </div>
 
-          <div className="p-2.5 rounded-xl bg-white border-2 border-emerald-400 shadow-xs space-y-1">
-            <span className="w-8 h-8 rounded-full bg-emerald-600 text-white font-mono font-black text-sm inline-flex items-center justify-center shadow-md">T</span>
-            <strong className="block text-slate-900 text-xs">4. TRACE CLAIMS</strong>
-            <p className="text-[10px] text-slate-600 font-medium">Lacak dokumen primer, tanggal rilis awal foto, dan kutipan utuh.</p>
+          <div className="p-1.5 rounded-lg bg-white border border-emerald-300 space-y-0.5">
+            <span className="w-6 h-6 rounded-full bg-emerald-600 text-white font-mono font-black text-xs inline-flex items-center justify-center">T</span>
+            <strong className="block text-slate-900 text-[10px]">4. TRACE CLAIMS</strong>
+            <p className="text-[9px] text-slate-600 leading-tight">Lacak rilis awal foto, video, & kutipan.</p>
           </div>
         </div>
-        <p className="text-[10.5px] italic text-slate-600 font-serif text-center pt-1">
+        <p className="text-[9.5px] italic text-slate-600 font-serif text-center">
           Gambar 2.1 Maskot Detektif Cek Fakta dan Kartu Alur 4 Langkah Metode Verifikasi Informasi SIFT.
         </p>
       </div>
@@ -168,66 +149,61 @@ const UnitDiagramGraphics: React.FC<{ unitNumber: number }> = ({ unitNumber }) =
 
   if (unitNumber === 3) {
     return (
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-50 via-indigo-50 to-slate-50 border-2 border-purple-200 space-y-3 text-slate-900 my-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-purple-200 pb-2">
-          <span className="text-[11px] font-black uppercase tracking-wider text-purple-950 flex items-center gap-1.5">
-            <FileText className="w-4 h-4 text-purple-700" />
+      <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-purple-50 via-indigo-50 to-slate-50 border border-purple-200 space-y-2 text-slate-900 my-2 shadow-xs">
+        <div className="flex items-center justify-between border-b border-purple-200 pb-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-purple-950 flex items-center gap-1">
+            <FileText className="w-3.5 h-3.5 text-purple-700" />
             <span>GAMBAR 3.1: MASKOT PENULIS AKADEMIK & MATRIKS ANTI-PLAGIARISME APA 7TH</span>
           </span>
-          <span className="text-[10px] font-mono font-bold text-purple-900 bg-purple-100 px-2 py-0.5 rounded">INFOGRAFIS KARTUN MATERI</span>
+          <span className="text-[9px] font-mono font-bold text-purple-900 bg-purple-100 px-1.5 py-0.5 rounded">INFOGRAFIS MATERI</span>
         </div>
 
         {/* Scholar Cartoon Banner */}
-        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-purple-200 shadow-xs">
-          <svg viewBox="0 0 100 100" className="w-16 h-16 shrink-0">
+        <div className="flex items-center gap-2 bg-white p-2 rounded-lg border border-purple-200">
+          <svg viewBox="0 0 100 100" className="w-12 h-12 shrink-0">
             <circle cx="50" cy="50" r="45" fill="#f3e8ff" />
-            {/* Toga Grad Cap */}
             <path d="M 50 20 L 85 35 L 50 50 L 15 35 Z" fill="#4c1d95" />
             <rect x="42" y="45" width="16" height="12" fill="#4c1d95" />
             <line x1="85" y1="35" x2="85" y2="55" stroke="#f59e0b" strokeWidth="2" />
             <circle cx="85" cy="57" r="2.5" fill="#f59e0b" />
-            {/* Head */}
             <circle cx="50" cy="58" r="16" fill="#fbcfe8" stroke="#4c1d95" strokeWidth="1.5" />
-            {/* Eyes */}
             <circle cx="44" cy="57" r="2" fill="#1e1b4b" />
             <circle cx="56" cy="57" r="2" fill="#1e1b4b" />
-            {/* Smile */}
             <path d="M 45 65 Q 50 69 55 65" fill="none" stroke="#be185d" strokeWidth="1.5" strokeLinecap="round" />
-            {/* Quill / Pen */}
             <path d="M 70 75 Q 85 55 90 40 Q 75 55 70 75" fill="#a855f7" />
           </svg>
 
-          <div className="space-y-1 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-purple-950 text-xs">Cendikiawan Muda:</span>
-              <span className="text-[10px] font-bold bg-purple-100 text-purple-900 px-2 py-0.5 rounded border border-purple-300">
+          <div className="space-y-0.5 text-[10.5px]">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-purple-950 text-[10px]">Cendikiawan Muda:</span>
+              <span className="text-[9px] font-bold bg-purple-100 text-purple-900 px-1.5 py-0.2 rounded border border-purple-300">
                 Integritas Ilmiah
               </span>
             </div>
-            <p className="text-[11px] text-slate-800 leading-tight">
-              "Menulis karya ilmiah dengan jujur adalah bentuk kehormatan tertinggi akademisi. Selalu sertakan sitasi APA 7th Edition baik saat mengutip langsung maupun merangkum gagasan orang lain!"
+            <p className="text-[10px] text-slate-800 leading-snug">
+              "Menulis karya ilmiah dengan jujur adalah kehormatan akademisi. Selalu sertakan sitasi APA 7th Edition baik saat mengutip langsung maupun merangkum gagasan!"
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-          <div className="p-3 rounded-xl bg-white border border-purple-200 space-y-1 shadow-2xs">
-            <strong className="text-purple-950 text-xs block font-serif">Kutipan Langsung (Direct Quote)</strong>
-            <p className="text-[10.5px] text-slate-700">Gunakan tanda petik ("...") untuk teks eksak di bawah 40 kata dan tuliskan nomor halaman.</p>
-            <p className="text-[10px] font-mono text-indigo-900 bg-purple-50 p-2 rounded border border-purple-200">
-              Format: Menurut Pratama (2026, hlm. 14), "Integritas akademik..."
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-0.5">
+          <div className="p-2 rounded-lg bg-white border border-purple-200 space-y-0.5">
+            <strong className="text-purple-950 text-[10px] block font-serif">Kutipan Langsung (Direct Quote)</strong>
+            <p className="text-[9.5px] text-slate-700">Tanda petik ("...") untuk teks eksak &lt; 40 kata + nomor halaman.</p>
+            <p className="text-[9px] font-mono text-indigo-900 bg-purple-50 p-1 rounded border border-purple-200">
+              Pratama (2026, hlm. 14), "Integritas akademik..."
             </p>
           </div>
 
-          <div className="p-3 rounded-xl bg-white border border-purple-200 space-y-1 shadow-2xs">
-            <strong className="text-purple-950 text-xs block font-serif">Parafrasa Akademik (Paraphrasing)</strong>
-            <p className="text-[10.5px] text-slate-700">Tulis ulang kalimat dengan gaya bahasa sendiri tanpa mengubah esensi pesan penulis asli.</p>
-            <p className="text-[10px] font-mono text-indigo-900 bg-purple-50 p-2 rounded border border-purple-200">
-              Format: Pentingnya kejujuran penulisan... (Pratama, 2026).
+          <div className="p-2 rounded-lg bg-white border border-purple-200 space-y-0.5">
+            <strong className="text-purple-950 text-[10px] block font-serif">Parafrasa Akademik (Paraphrasing)</strong>
+            <p className="text-[9.5px] text-slate-700">Tulis ulang kalimat dengan gaya sendiri tanpa mengubah esensi.</p>
+            <p className="text-[9px] font-mono text-indigo-900 bg-purple-50 p-1 rounded border border-purple-200">
+              Pentingnya kejujuran penulisan... (Pratama, 2026).
             </p>
           </div>
         </div>
-        <p className="text-[10.5px] italic text-slate-600 font-serif text-center pt-1">
+        <p className="text-[9.5px] italic text-slate-600 font-serif text-center">
           Gambar 3.1 Maskot Cendikiawan Muda dan Panduan Praktis Format Pengutipan APA 7th Edition.
         </p>
       </div>
@@ -236,70 +212,62 @@ const UnitDiagramGraphics: React.FC<{ unitNumber: number }> = ({ unitNumber }) =
 
   if (unitNumber === 4) {
     return (
-      <div className="p-4 rounded-2xl bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 border-2 border-sky-300 space-y-3 text-slate-900 my-4 shadow-sm">
-        <div className="flex items-center justify-between border-b border-sky-300 pb-2">
-          <span className="text-[11px] font-black uppercase tracking-wider text-sky-950 flex items-center gap-1.5">
-            <CheckCircle className="w-4 h-4 text-sky-700" />
+      <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 border border-sky-300 space-y-2 text-slate-900 my-2 shadow-xs">
+        <div className="flex items-center justify-between border-b border-sky-300 pb-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-sky-950 flex items-center gap-1">
+            <CheckCircle className="w-3.5 h-3.5 text-sky-700" />
             <span>GAMBAR 4.1: MASKOT GARDA DATA & KLASIFIKASI DATA PRIBADI (UU PDP NO. 27/2022)</span>
           </span>
-          <span className="text-[10px] font-mono font-bold text-sky-900 bg-sky-100 px-2 py-0.5 rounded">INFOGRAFIS KARTUN MATERI</span>
+          <span className="text-[9px] font-mono font-bold text-sky-900 bg-sky-100 px-1.5 py-0.5 rounded">INFOGRAFIS MATERI</span>
         </div>
 
         {/* Cyber Security Guard Mascot Banner */}
-        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-sky-200 shadow-xs">
-          <svg viewBox="0 0 100 100" className="w-16 h-16 shrink-0">
+        <div className="flex items-center gap-2 bg-white p-2 rounded-lg border border-sky-200">
+          <svg viewBox="0 0 100 100" className="w-12 h-12 shrink-0">
             <circle cx="50" cy="50" r="45" fill="#e0f2fe" />
-            {/* Guard Helmet / Cap */}
             <path d="M 20 40 Q 50 15 80 40 L 85 45 L 15 45 Z" fill="#0369a1" />
-            {/* Shield emblem on cap */}
             <circle cx="50" cy="30" r="4" fill="#f59e0b" />
-            {/* Face */}
             <circle cx="50" cy="55" r="16" fill="#fed7aa" stroke="#0369a1" strokeWidth="1.5" />
-            {/* Eyes */}
             <circle cx="44" cy="53" r="2" fill="#1e1b4b" />
             <circle cx="56" cy="53" r="2" fill="#1e1b4b" />
-            {/* Confident Smile */}
             <path d="M 45 61 Q 50 66 55 61" fill="none" stroke="#0369a1" strokeWidth="1.5" strokeLinecap="round" />
-            {/* Lock graphic */}
             <rect x="38" y="70" width="24" height="18" rx="4" fill="#0284c7" stroke="#0369a1" strokeWidth="1.5" />
             <path d="M 43 70 L 43 64 Q 43 58 50 58 Q 57 58 57 64 L 57 70" fill="none" stroke="#f59e0b" strokeWidth="2.5" />
           </svg>
 
-          <div className="space-y-1 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-sky-950 text-xs">Garda Cyber PDP:</span>
-              <span className="text-[10px] font-bold bg-sky-100 text-sky-900 px-2 py-0.5 rounded border border-sky-300">
+          <div className="space-y-0.5 text-[10.5px]">
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-sky-950 text-[10px]">Garda Cyber PDP:</span>
+              <span className="text-[9px] font-bold bg-sky-100 text-sky-900 px-1.5 py-0.2 rounded border border-sky-300">
                 Benteng Privasi Digital
               </span>
             </div>
-            <p className="text-[11px] text-slate-800 leading-tight">
+            <p className="text-[10px] text-slate-800 leading-snug">
               "Data pribadi adalah aset berharga! UU PDP No. 27/2022 melindungi hak setiap warga negara dari kebocoran data, penyalahgunaan identitas, dan peretasan akun."
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-          <div className="p-3 rounded-xl bg-white border border-sky-200 space-y-1">
-            <span className="text-[11px] font-extrabold text-sky-950 block">1. Data Pribadi Spesifik (Sensitif)</span>
-            <ul className="list-disc pl-4 text-[10.5px] text-slate-700 space-y-0.5">
-              <li>Data Rekam Medis & Kesehatan</li>
-              <li>Data Biometrik, Sidik Jari & Iris Mata</li>
-              <li>Data Keuangan, Pin & Sandi Akun</li>
-              <li>Pandangan Politik, Agama, & Anak</li>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-0.5">
+          <div className="p-2 rounded-lg bg-white border border-sky-200 space-y-0.5">
+            <span className="text-[10px] font-extrabold text-sky-950 block">1. Data Spesifik (Sensitif)</span>
+            <ul className="list-disc pl-3 text-[9.5px] text-slate-700 space-y-0.2">
+              <li>Rekam Medis & Kesehatan</li>
+              <li>Biometrik, Sidik Jari, Iris</li>
+              <li>Keuangan, PIN & Password</li>
             </ul>
           </div>
 
-          <div className="p-3 rounded-xl bg-white border border-sky-200 space-y-1">
-            <span className="text-[11px] font-extrabold text-sky-950 block">2. Data Pribadi Umum</span>
-            <ul className="list-disc pl-4 text-[10.5px] text-slate-700 space-y-0.5">
-              <li>Nama Lengkap & Jenis Kelamin</li>
-              <li>Kewarganegaraan & Status Nikah</li>
-              <li>Nomor Telepon & Alamat Domisili</li>
-              <li>Kombinasi Data Umum Identifikasi</li>
+          <div className="p-2 rounded-lg bg-white border border-sky-200 space-y-0.5">
+            <span className="text-[10px] font-extrabold text-sky-950 block">2. Data Umum</span>
+            <ul className="list-disc pl-3 text-[9.5px] text-slate-700 space-y-0.2">
+              <li>Nama Lengkap & Kelamin</li>
+              <li>Kewarganegaraan & Status</li>
+              <li>Telepon & Alamat Domisili</li>
             </ul>
           </div>
         </div>
-        <p className="text-[10.5px] italic text-slate-600 font-serif text-center pt-1">
+        <p className="text-[9.5px] italic text-slate-600 font-serif text-center">
           Gambar 4.1 Maskot Garda Cyber PDP dan Klasifikasi Jenis Data Pribadi Menurut UU PDP No. 27/2022.
         </p>
       </div>
@@ -307,59 +275,55 @@ const UnitDiagramGraphics: React.FC<{ unitNumber: number }> = ({ unitNumber }) =
   }
 
   return (
-    <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50 via-teal-50 to-slate-50 border-2 border-emerald-300 space-y-3 text-slate-900 my-4 shadow-sm">
-      <div className="flex items-center justify-between border-b border-emerald-300 pb-2">
-        <span className="text-[11px] font-black uppercase tracking-wider text-emerald-950 flex items-center gap-1.5">
-          <AlertTriangle className="w-4 h-4 text-emerald-700" />
+    <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-slate-50 border border-emerald-300 space-y-2 text-slate-900 my-2 shadow-xs">
+      <div className="flex items-center justify-between border-b border-emerald-300 pb-1">
+        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-950 flex items-center gap-1">
+          <AlertTriangle className="w-3.5 h-3.5 text-emerald-700" />
           <span>GAMBAR 5.1: MASKOT SISWA BIJAK & ALUR KEPUTUSAN NETIKET</span>
         </span>
-        <span className="text-[10px] font-mono font-bold text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded">INFOGRAFIS KARTUN MATERI</span>
+        <span className="text-[9px] font-mono font-bold text-emerald-900 bg-emerald-100 px-1.5 py-0.5 rounded">INFOGRAFIS MATERI</span>
       </div>
 
       {/* Wise Student Mascot Banner */}
-      <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-emerald-200 shadow-xs">
-        <svg viewBox="0 0 100 100" className="w-16 h-16 shrink-0">
+      <div className="flex items-center gap-2 bg-white p-2 rounded-lg border border-emerald-200">
+        <svg viewBox="0 0 100 100" className="w-12 h-12 shrink-0">
           <circle cx="50" cy="50" r="45" fill="#d1fae5" />
-          {/* Glasses Student */}
           <circle cx="50" cy="48" r="18" fill="#fed7aa" stroke="#047857" strokeWidth="1.5" />
-          {/* Eyeglasses */}
           <circle cx="43" cy="46" r="5" fill="none" stroke="#047857" strokeWidth="1.5" />
           <circle cx="57" cy="46" r="5" fill="none" stroke="#047857" strokeWidth="1.5" />
           <line x1="48" y1="46" x2="52" y2="46" stroke="#047857" strokeWidth="1.5" />
           <circle cx="43" cy="46" r="2" fill="#1e1b4b" />
           <circle cx="57" cy="46" r="2" fill="#1e1b4b" />
-          {/* Smile */}
           <path d="M 44 56 Q 50 61 56 56" fill="none" stroke="#047857" strokeWidth="1.5" strokeLinecap="round" />
-          {/* Smartphone with checkmark */}
           <rect x="68" y="55" width="18" height="28" rx="3" fill="#0f766e" stroke="#047857" strokeWidth="1.5" />
           <path d="M 72 68 L 76 72 L 82 64" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
-        <div className="space-y-1 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-emerald-950 text-xs">Siswa Bijak Netiket:</span>
-            <span className="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded border border-emerald-300">
+        <div className="space-y-0.5 text-[10.5px]">
+          <div className="flex items-center gap-1.5">
+            <span className="font-extrabold text-emerald-950 text-[10px]">Siswa Bijak Netiket:</span>
+            <span className="text-[9px] font-bold bg-emerald-100 text-emerald-900 px-1.5 py-0.2 rounded border border-emerald-300">
               Pikirkan Sebelum Klik
             </span>
           </div>
-          <p className="text-[11px] text-slate-800 leading-tight">
-            "Ingatlah bahwa di balik setiap akun layar digital terdapat manusia nyata yang memiliki perasaan dan hak martabat. Berkomunikasilah secara santun, inklusif, dan bebas dari rundungan siber!"
+          <p className="text-[10px] text-slate-800 leading-snug">
+            "Ingatlah bahwa di balik setiap akun layar digital terdapat manusia nyata. Berkomunikasilah secara santun, inklusif, dan bebas dari rundungan siber!"
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center text-xs pt-1">
-        <div className="p-2.5 bg-white rounded-xl border border-emerald-200 font-extrabold text-emerald-950 shadow-xs">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-center text-xs pt-0.5">
+        <div className="p-1.5 bg-white rounded-lg border border-emerald-200 font-extrabold text-emerald-950 text-[10px]">
           1. Tahan Emosi & Periksa Niat
         </div>
-        <div className="p-2.5 bg-white rounded-xl border border-emerald-200 font-extrabold text-emerald-950 shadow-xs">
+        <div className="p-1.5 bg-white rounded-lg border border-emerald-200 font-extrabold text-emerald-950 text-[10px]">
           2. Uji Kebenaran & Kredibilitas
         </div>
-        <div className="p-2.5 bg-white rounded-xl border border-emerald-200 font-extrabold text-emerald-950 shadow-xs">
+        <div className="p-1.5 bg-white rounded-lg border border-emerald-200 font-extrabold text-emerald-950 text-[10px]">
           3. Pertimbangkan Dampak Hukum
         </div>
       </div>
-      <p className="text-[10.5px] italic text-slate-600 font-serif text-center pt-1">
+      <p className="text-[9.5px] italic text-slate-600 font-serif text-center">
         Gambar 5.1 Maskot Siswa Bijak Netiket dan Tiga Tahapan Pengambilan Keputusan Komunikasi Siber yang Etis.
       </p>
     </div>
@@ -380,11 +344,13 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
   const optionLetters = ['A', 'B', 'C', 'D'];
 
   // Dynamic Online Access URL (automatically updates depending on hosting origin/location)
-  const currentOnlineUrl = typeof window !== 'undefined' ? window.location.href : 'https://unj.ac.id';
+  const currentOnlineUrl = typeof window !== 'undefined' 
+    ? (window.location.origin + window.location.pathname).replace(/\/$/, '')
+    : 'https://e-modul-etika-informasi.com';
 
   // Total pages calculation for multi-page book:
-  // Cover (1) + Catalog/CPMK (1) + (5 units * 3 pages per unit = 15) + PostTest (1) + Appendix Video (1) + Evaluasi Page 1 (1) + Evaluasi Page 2 (1) = 21 pages total
-  const totalBookPages = 2 + (units.length * 3) + 4;
+  // Cover (1) + Catalog/CPMK (1) + Petunjuk (1) + Peta Konsep (1) + (5 units * 3 pages per unit = 15) + PostTest Part 1 (1) + PostTest Part 2 (1) + Appendix Video (1) + Evaluasi Page 1 (1) + Evaluasi Page 2 (1) = 24 pages total
+  const totalBookPages = 4 + (units.length * 3) + 5;
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex justify-center p-1 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
@@ -393,7 +359,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
         @media print {
           @page {
             size: A4 portrait;
-            margin: 5mm 6mm 5mm 6mm;
+            margin: 6mm 6mm 6mm 6mm;
           }
           *, *::before, *::after {
             -webkit-print-color-adjust: exact !important;
@@ -413,8 +379,8 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
           .pdf-book-page {
             box-sizing: border-box !important;
             width: 100% !important;
-            height: 278mm !important;
-            max-height: 278mm !important;
+            min-height: 270mm !important;
+            max-height: 276mm !important;
             overflow: hidden !important;
             page-break-before: always !important;
             page-break-after: always !important;
@@ -422,10 +388,10 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             break-after: page !important;
             page-break-inside: avoid !important;
             break-inside: avoid !important;
-            padding: 5mm 6mm !important;
+            padding: 4mm 5mm !important;
             margin: 0 !important;
             background: #ffffff !important;
-            border: 2px solid #0f172a !important;
+            border: 1px solid #1e293b !important;
             border-radius: 0 !important;
             box-shadow: none !important;
           }
@@ -439,14 +405,14 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
           }
           /* Print compact adjustments */
           .print-compact-gap {
-            gap: 2mm !important;
+            gap: 1.5mm !important;
           }
           .print-compact-padding {
-            padding: 2mm 3mm !important;
+            padding: 1.5mm 2.5mm !important;
           }
           .print-text-sm {
-            font-size: 10px !important;
-            line-height: 1.25 !important;
+            font-size: 9.5px !important;
+            line-height: 1.2 !important;
           }
         }
       `}</style>
@@ -510,151 +476,113 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN 1: COVER BUKU MODUL AJAR (COVER PAGE)
              ========================================== */}
           <div 
-            className="pdf-book-page pdf-book-page-first border-4 sm:border-8 border-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between bg-gradient-to-b from-slate-50 via-white to-amber-50/40 relative overflow-hidden print:border-2 print:rounded-none page-break"
+            className="pdf-book-page pdf-book-page-first border-4 sm:border-[6px] border-amber-600 rounded-none p-4 sm:p-8 space-y-4 sm:space-y-6 flex flex-col justify-between bg-[#FAF8F5] relative overflow-hidden print:border-2 print:border-amber-600 print:rounded-none page-break"
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
-            {/* Top Badge & Institute Banner */}
-            <div className="space-y-2 sm:space-y-3 text-center border-b-2 border-slate-900 pb-3 sm:pb-4">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400 text-slate-950 font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-full shadow-xs">
-                <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span>MODUL AJAR CETAK & PEMBELAJARAN MANDIRI (FLIPBOOK READY)</span>
+            {/* Top Bar Banner */}
+            <div className="space-y-2 text-center border-b-2 border-amber-600 pb-3">
+              <div className="flex items-center justify-between">
+                <span className="px-3 py-1 bg-amber-600 text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider rounded-xs shadow-xs">
+                  MODUL PEMBELAJARAN
+                </span>
+                <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-800 uppercase tracking-wider">
+                  EDISI SPESIAL 2026
+                </span>
               </div>
-              <p className="text-[10px] sm:text-xs font-serif font-black uppercase tracking-wider text-slate-700 leading-snug">
-                PROGRAM STUDI PERPUSTAKAAN DAN SAINS INFORMASI • FAKULTAS ILMU PENDIDIKAN • UNIVERSITAS NEGERI JAKARTA
-              </p>
             </div>
 
-            {/* Main Title Section */}
-            <div className="space-y-2 sm:space-y-3 text-center py-2 sm:py-3">
-              <h1 className="text-2xl sm:text-4xl font-black font-serif uppercase tracking-tight text-slate-950 leading-tight">
-                {adminConfig.moduleTitle || 'ETIKA INFORMASI BERBASIS LITERASI DIGITAL'}
+            {/* Eyebrow & Title Section */}
+            <div className="space-y-3 text-center py-2">
+              <p className="text-[10px] sm:text-xs font-serif font-black uppercase tracking-[0.2em] text-amber-900">
+                J E L A J A H &nbsp; D I G I T A L &nbsp; • &nbsp; E T I K A &nbsp; I N F O R M A S I &nbsp; • &nbsp; L I T E R A S I &nbsp; K R I T I S
+              </p>
+              
+              <h1 className="text-3xl sm:text-5xl font-black font-serif uppercase tracking-tight text-slate-950 leading-none py-1">
+                {adminConfig.moduleTitle || 'ETIKA INFORMASI'}
               </h1>
-              <p className="text-xs sm:text-base font-serif italic text-slate-700 max-w-2xl mx-auto font-semibold">
-                Buku Panduan Pembelajaran Modul Luring, Gambar Infografis Terintegrasi, Video Streaming QR Code, & Kunci Jawaban Kuis Evaluasi
+              
+              <p className="text-xs sm:text-base font-serif italic text-slate-700 max-w-2xl mx-auto font-medium">
+                E-Modul Interaktif Berbasis Literasi Digital untuk Generasi Kritis, Cerdas, dan Bertanggung Jawab
               </p>
             </div>
 
-            {/* DYNAMIC ONLINE ACCESS & QR CODE SECTION (Cover QR Code & Link) */}
-            <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-indigo-950 text-white border-2 border-indigo-900 shadow-md space-y-2">
-              <div className="flex items-center justify-between border-b border-indigo-800 pb-1.5">
-                <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-amber-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>AKSES ONLINE & E-MODUL FLIPBOOK (QR CODE DINAMIS)</span>
-                </span>
-                <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-mono font-bold border border-emerald-400/30">
-                  LIVE LINK
-                </span>
+            {/* Middle Feature Outline Box */}
+            <div className="p-4 sm:p-5 bg-white border-2 border-slate-900 rounded-none shadow-xs space-y-2 text-center max-w-2xl mx-auto w-full">
+              <div className="flex items-center justify-center gap-4 text-amber-600 pb-1">
+                <BookOpen className="w-5 h-5" />
+                <Video className="w-5 h-5" />
+                <ShieldCheck className="w-5 h-5" />
+                <Award className="w-5 h-5" />
               </div>
-
-              <div className="flex flex-row items-center gap-3 sm:gap-4 pt-0.5">
-                <div className="bg-white p-1.5 sm:p-2 rounded-xl shadow-inner shrink-0">
-                  <QrCodeSvg value={currentOnlineUrl} size={90} />
-                </div>
-
-                <div className="space-y-1.5 text-[11px] text-left">
-                  <p className="text-slate-200 font-serif leading-tight">
-                    Pindai Kode QR atau klik tautan di bawah ini untuk mengakses E-Modul Interaktif, Simulasi Cek Fakta, Penganalisis Plagiarisme, dan Game Etika secara langsung:
-                  </p>
-                  
-                  <div className="p-1.5 rounded-lg bg-slate-900/90 border border-indigo-700/50">
-                    <a 
-                      href={currentOnlineUrl} 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="font-mono text-[10px] text-sky-300 font-bold hover:underline underline break-all flex items-center gap-1"
-                    >
-                      <span className="truncate">{currentOnlineUrl}</span>
-                      <ExternalLink className="w-3 h-3 shrink-0" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <p className="text-xs sm:text-sm font-serif font-bold text-slate-900 leading-relaxed">
+                Memuat 5 Unit Pembelajaran Utama, Video E-Learning dengan Scan QR Code, Simulasi Kasus Interaktif, Panduan Cek Fakta, Evaluasi Turnitin No-Repo, dan Kuis Akhir.
+              </p>
             </div>
 
-            {/* Tim Peneliti & Penyusun */}
-            <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border-2 border-slate-900 shadow-xs space-y-1 text-center">
-              <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-amber-800 block">
-                TIM PENELITI & PENYUSUN MODUL AJAR:
-              </span>
-              <div className="text-[11px] sm:text-xs font-serif font-bold text-slate-900 leading-relaxed grid grid-cols-1 sm:grid-cols-2 gap-1 text-left pt-0.5">
-                <div>1. Riyan Sanjaya, M.Hum</div>
-                <div>2. Laylatul Munawaroh, S.IP., MA.</div>
-                <div>3. Dr. Ahmad Rifqy Ash-Shiddiqy, M.Pd.</div>
-                <div>4. Maydi Aula Riski, S.IP., MA.</div>
-                <div className="sm:col-span-2 text-center">5. Wisnu Putri Airmas Jati, S.IP., MA.</div>
+            {/* CENTER QR CODE BOX */}
+            <div className="p-4 bg-white border border-slate-300 text-center space-y-2 max-w-md mx-auto w-full shadow-xs">
+              <div className="flex justify-center py-1">
+                <QrCodeSvg value={currentOnlineUrl} size={110} />
               </div>
-            </div>
-
-            {/* Identitas Pemilik Buku Modul */}
-            <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900 text-white space-y-2 shadow-sm">
-              <div className="flex items-center justify-between border-b border-slate-700 pb-1.5">
-                <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-amber-400 flex items-center gap-1">
-                  <UserCheck className="w-3.5 h-3.5" />
-                  <span>IDENTITAS RESMI PEMILIK BUKU MODUL AJAR</span>
-                </span>
-                <span className="text-[9px] font-mono text-slate-400">STATUS: CETAK</span>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Nama Mahasiswa</span>
-                  <strong className="text-amber-300 font-serif block truncate">{profile.nama || 'Peserta Literasi'}</strong>
-                </div>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">NIM / ID</span>
-                  <strong className="text-white font-mono block">{profile.nim || '-'}</strong>
-                </div>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Kelas / Rombel</span>
-                  <strong className="text-white block">{profile.kelas || '-'}</strong>
-                </div>
-                <div>
-                  <span className="text-[9px] text-slate-400 block uppercase font-mono">Instansi / Kampus</span>
-                  <strong className="text-white block truncate">{profile.instansi || 'FIP UNJ'}</strong>
-                </div>
-              </div>
+              <p className="text-[11px] font-mono font-bold text-slate-800 uppercase tracking-tight">
+                Scan untuk membuka Versi Interaktif Aplikasi Web
+              </p>
+              <a 
+                href={currentOnlineUrl} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="font-mono text-xs text-amber-700 font-extrabold hover:underline block break-all"
+              >
+                {currentOnlineUrl}
+              </a>
             </div>
 
             {/* Footer Cover Stamp */}
-            <div className="flex items-center justify-between pt-2 border-t border-slate-300 text-[9px] sm:text-[10px] font-mono text-slate-600">
-              <span>UNJ PRESS • HAK CIPTA DILINDUNGI UNDANG-UNDANG</span>
-              <span>CETAKAN DOKUMEN: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+            <div className="border-t-2 border-slate-300 pt-3 text-center space-y-1">
+              <p className="text-xs sm:text-sm font-serif font-black uppercase tracking-wider text-slate-900">
+                TIM DOSEN PRODI PERPUSTAKAAN DAN SAINS INFORMASI FIP UNJ
+              </p>
+              <p className="text-[10px] sm:text-xs font-serif italic text-slate-600">
+                Hak Cipta Dilindungi Undang-Undang • Bebas Digunakan untuk Pendidikan
+              </p>
             </div>
           </div>
 
           {/* ==========================================
-              HALAMAN 2: KATA PENGANTAR, CPMK, & DAFTAR ISI
+              HALAMAN 2: KATA PENGANTAR (BAGIAN I)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
-            <div className="space-y-6">
-              <div className="border-b-4 border-slate-900 pb-3 flex items-center justify-between">
-                <div>
-                  <span className="text-xs font-black uppercase tracking-widest text-indigo-700">MODUL AJAR LURING</span>
-                  <h2 className="text-2xl font-black font-serif uppercase text-slate-950">KATA PENGANTAR & DAFTAR ISI</h2>
-                </div>
-                <BookOpen className="w-8 h-8 text-slate-900" />
+            <div className="space-y-5">
+              <div className="border-b-2 border-slate-900 pb-2 flex items-center justify-between">
+                <h2 className="text-2xl font-black font-serif uppercase tracking-tight text-slate-950">KATA PENGANTAR</h2>
+                <span className="text-xs font-black uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-1 rounded">
+                  BAGIAN I
+                </span>
               </div>
 
-              {/* Kata Pengantar */}
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-300 space-y-2 text-xs text-slate-800 leading-relaxed font-serif">
-                <h3 className="font-black text-sm text-slate-900 uppercase tracking-wide">Kata Pengantar Tim Peneliti</h3>
-                <p>
-                  Puji syukur kehadirat Tuhan Yang Maha Esa atas terwujudnya Modul Ajar Cetak E-Modul Interaktif Etika Informasi ini. Modul ajar ini disusun sebagai panduan pembelajaran mandiri maupun terstruktur untuk mahasiswa dalam memahami hakikat etika informasi, pelindungan data pribadi (UU PDP No. 27/2022), verifikasi disinformasi berbasis SIFT, serta pencegahan plagiarisme karya ilmiah.
+              {/* Kata Pengantar Body Text */}
+              <div className="space-y-3 text-xs sm:text-sm text-slate-800 leading-relaxed font-serif pt-2">
+                <p className="first-letter:text-3xl first-letter:font-black first-letter:text-amber-800 first-letter:mr-1 first-letter:float-left">
+                  Puji dan syukur kita panjatkan ke hadirat Tuhan Yang Maha Esa atas terwujudnya E-Modul Etika Informasi Berbasis Literasi Digital ini. Di era ledakan informasi dan pesatnya perkembangan teknologi kecerdasan buatan (AI), kemampuan teknis saja tidak lagi cukup. Peserta didik membutuhkan pijakan etis yang kokoh agar tidak tersesat dalam arus informasi yang masif.
                 </p>
                 <p>
-                  Diharapkan modul ini dapat memberikan pengalaman belajar komprehensif baik saat digunakan secara luring maupun saat dikonversi menjadi e-book flipbook interaktif.
+                  E-Modul ini disusun dengan pendekatan interaktif terintegrasi yang menggabungkan teori konseptual, analisis kasus nyata di Indonesia, video e-learning berbasis QR Code, hingga simulasi praktis seperti penangkalan hoaks dengan metode S.I.F.T., pengecekan privasi data pribadi (UU PDP No. 27/2022), uji kemiripan Turnitin No-Repo, serta etika berkomentar 5P di media sosial.
+                </p>
+                <p>
+                  Diharapkan E-Modul ini dapat menjadi bahan ajar yang menarik, baik digunakan secara daring melalui aplikasi web interaktif, maupun secara luring melalui cetakan PDF dan model Digital Flipbook 3D.
                 </p>
               </div>
 
               {/* Capaian Pembelajaran Matakuliah (CPMK) */}
-              <div className="p-5 rounded-2xl bg-amber-50/60 border-2 border-amber-300 space-y-3 text-xs text-slate-900">
-                <h3 className="font-extrabold text-xs uppercase tracking-wider text-amber-900 flex items-center gap-2">
+              <div className="p-4 bg-amber-50/80 border border-amber-300 space-y-2 text-xs text-slate-900 mt-4">
+                <h3 className="font-extrabold text-xs uppercase tracking-wider text-amber-900 flex items-center gap-2 border-b border-amber-300 pb-1">
                   <Award className="w-4 h-4 text-amber-700" />
                   <span>CAPAIAN PEMBELAJARAN MODUL (CPMK)</span>
                 </h3>
-                <ul className="list-disc pl-5 space-y-1.5 font-serif text-[11.5px] leading-relaxed">
+                <ul className="list-disc pl-5 space-y-1 font-serif text-xs leading-relaxed">
                   <li><strong>CPMK 1:</strong> Mampu menganalisis hakikat etika informasi dan urgensi literasi digital di era disrupsi.</li>
                   <li><strong>CPMK 2:</strong> Mampu mempraktikkan verifikasi hoaks dan disinformasi menggunakan metode 4 langkah SIFT.</li>
                   <li><strong>CPMK 3:</strong> Mampu menerapkan prinsip pencegahan plagiarisme dan teknik sitasi standar APA 7th Edition.</li>
@@ -663,54 +591,170 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                 </ul>
               </div>
 
-              {/* Daftar Isi Modul */}
-              <div className="space-y-3">
-                <h3 className="font-black text-xs uppercase tracking-wider text-slate-950 border-b-2 border-slate-900 pb-1">
-                  STRUKTUR BAB & DAFTAR ISI MODUL (19 HALAMAN)
+              {/* Signature Block */}
+              <div className="text-right pt-6 text-xs font-serif space-y-1 text-slate-800">
+                <p className="font-bold">Jakarta, Juli 2026</p>
+                <p className="italic text-slate-600">Tim Dosen Prodi Perpustakaan dan Sains Informasi FIP UNJ</p>
+                <div className="pt-8">
+                  <strong className="text-slate-950 font-sans text-sm underline">Riyan Sanjaya, M.Hum.</strong>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center text-[10px] font-mono text-slate-500 pt-3 border-t border-slate-200">
+              E-Modul Etika Informasi UNJ • Halaman 2 dari {totalBookPages}
+            </div>
+          </div>
+
+          {/* ==========================================
+              HALAMAN 3: PETUNJUK PENGGUNAAN MODUL (BAGIAN II)
+             ========================================== */}
+          <div 
+            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
+            style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
+          >
+            <div className="space-y-4">
+              <div className="border-b-2 border-slate-900 pb-2 flex items-center justify-between">
+                <h2 className="text-2xl font-black font-serif uppercase tracking-tight text-slate-950">PETUNJUK PENGGUNAAN MODUL</h2>
+                <span className="text-xs font-black uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-1 rounded">
+                  BAGIAN II
+                </span>
+              </div>
+
+              {/* Box 1: Alur Pembelajaran Siswa */}
+              <div className="p-4 bg-amber-50/60 border border-amber-300 space-y-2">
+                <h3 className="font-black text-xs uppercase tracking-wider text-amber-950 flex items-center gap-1.5 border-b border-amber-300 pb-1">
+                  <span>🎯 ALUR PEMBELAJARAN SISWA</span>
                 </h3>
-                <div className="space-y-2 text-xs font-serif">
-                  {units.map((u, i) => {
-                    const pageCoverNum = 3 + (i * 3);
-                    const pageMateriNum = 4 + (i * 3);
-                    const pageKuisNum = 5 + (i * 3);
-                    return (
-                      <div key={u.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl border border-slate-200 bg-white font-bold gap-1">
-                        <div className="flex items-center gap-3">
-                          <span className="w-7 h-7 rounded-lg bg-indigo-900 text-amber-300 font-mono flex items-center justify-center text-xs shrink-0">
-                            0{u.unitNumber}
-                          </span>
-                          <span>BAB 0{u.unitNumber}: {u.title}</span>
-                        </div>
-                        <span className="text-slate-600 font-mono text-[11px]">
-                          Judul: Hlm {pageCoverNum} • Materi & Gambar: Hlm {pageMateriNum} • Kuis: Hlm {pageKuisNum}
-                        </span>
-                      </div>
-                    );
-                  })}
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50 font-bold">
-                    <div className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded-lg bg-purple-900 text-amber-300 font-mono flex items-center justify-center text-xs">
-                        VI
-                      </span>
-                      <span>BAB VI: SOAL EVALUASI AKHIR (POST-TEST) & KUNCI JAWABAN</span>
+                <ol className="list-decimal pl-5 space-y-1 text-xs font-serif text-slate-900 leading-relaxed">
+                  <li>Bacalah <strong>Tujuan Pembelajaran</strong> pada setiap Unit.</li>
+                  <li>Scan <strong>QR Code Video E-Learning</strong> untuk menonton penjelasan visual.</li>
+                  <li>Pelajari <strong>ringkasan materi</strong> dan poin-poin penting.</li>
+                  <li>Selesaikan <strong>Lembar Kerja & Simulasi Kasus</strong>.</li>
+                  <li>Kerjakan <strong>Soal Latihan Unit (5 Soal)</strong> dan cocokkan dengan Kunci Jawaban.</li>
+                  <li>Ikuti <strong>Evaluasi Kuis Akhir</strong> untuk mendapatkan Sertifikat.</li>
+                </ol>
+              </div>
+
+              {/* Box 2: Glosarium Ikon Modul */}
+              <div className="p-4 bg-white border border-slate-300 space-y-2">
+                <h3 className="font-black text-xs uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1">
+                  📚 GLOSARIUM IKON MODUL
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-serif text-slate-800">
+                  <div>🎯 <strong>Tujuan:</strong> Target kompetensi yang harus dicapai.</div>
+                  <div>📹 <strong>Video & QR:</strong> Link & scan video e-learning.</div>
+                  <div>💡 <strong>Kasus & Refleksi:</strong> Lembar kerja studi kasus nyata.</div>
+                  <div>📝 <strong>Soal Latihan:</strong> Evaluasi formatif tingkat unit.</div>
+                  <div>🔍 <strong>Cek Fakta & Turnitin:</strong> Alat bantu verifikasi & etika.</div>
+                </div>
+              </div>
+
+              {/* Box 3: Video Perkenalan Modul */}
+              <div className="p-4 bg-white border-2 border-slate-900 space-y-2">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5">
+                  <span className="font-extrabold text-xs text-slate-900 flex items-center gap-1.5">
+                    <Video className="w-4 h-4 text-amber-600" />
+                    <span>Video Perkenalan E-Modul "Jelajah Digital"</span>
+                  </span>
+                  <span className="px-2 py-0.5 bg-slate-200 text-slate-900 font-mono text-[10px] font-bold rounded">
+                    Durasi: 9:32 menit
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-4 pt-1">
+                  <div className="space-y-1.5 text-xs font-serif text-slate-700 flex-1">
+                    <p className="italic">
+                      "Penjelasan latar belakang e-modul, gambaran 5 unit interaktif, serta pesan moral pentingnya generasi kritis di era banjir informasi."
+                    </p>
+                    <div className="p-2 bg-slate-100 border border-slate-300 text-[10.5px] font-mono break-all text-blue-800 font-bold">
+                      Link URL: {currentOnlineUrl}
                     </div>
-                    <span className="text-slate-600 font-mono text-[11px]">Halaman {totalBookPages - 1}</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50 font-bold">
-                    <div className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded-lg bg-emerald-900 text-amber-300 font-mono flex items-center justify-center text-xs">
-                        L
-                      </span>
-                      <span>LAMPIRAN: DIREKTORI VIDEO, SIFT & REKAPITULASI EVALUASI</span>
-                    </div>
-                    <span className="text-slate-600 font-mono text-[11px]">Halaman {totalBookPages}</span>
+                  <div className="bg-white p-2 border border-slate-300 shrink-0 text-center">
+                    <QrCodeSvg value={currentOnlineUrl} size={85} />
+                    <span className="text-[9px] font-mono font-bold block mt-1 uppercase text-slate-600">SCAN VIDEO INTRO</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="text-center text-[10px] font-mono text-slate-500 pt-4 border-t border-slate-200">
-              Modul Ajar Luring • Kata Pengantar & CPMK • Halaman 2 dari {totalBookPages}
+            <div className="text-center text-[10px] font-mono text-slate-500 pt-3 border-t border-slate-200">
+              E-Modul Etika Informasi UNJ • Halaman 3 dari {totalBookPages}
+            </div>
+          </div>
+
+          {/* ==========================================
+              HALAMAN 4: PETA KONSEP PEMBELAJARAN (BAGIAN III)
+             ========================================== */}
+          <div 
+            className="pdf-book-page space-y-4 pt-4 sm:pt-6 flex flex-col justify-between bg-[#FAF8F5] page-break"
+            style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
+          >
+            <div className="space-y-6">
+              <div className="border-b-2 border-slate-900 pb-2 flex items-center justify-between">
+                <h2 className="text-2xl font-black font-serif uppercase tracking-tight text-slate-950">PETA KONSEP PEMBELAJARAN</h2>
+                <span className="text-xs font-black uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-1 rounded">
+                  BAGIAN III
+                </span>
+              </div>
+
+              {/* Main Center Diagram Box */}
+              <div className="p-4 bg-slate-900 text-amber-300 font-serif font-black text-center text-sm sm:text-base uppercase tracking-widest border-2 border-slate-950 max-w-xl mx-auto shadow-md">
+                ETIKA INFORMASI DI ERA DIGITAL
+              </div>
+
+              {/* 5 Unit Concept Map Columns */}
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-2.5 text-xs font-serif">
+                {/* Unit 1 */}
+                <div className="p-3 bg-emerald-50 border-2 border-emerald-400 space-y-1.5 text-slate-900">
+                  <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 bg-emerald-700 text-white block text-center">
+                    UNIT 1
+                  </span>
+                  <h4 className="font-extrabold text-xs text-slate-950">Konsep Etika Digital</h4>
+                  <p className="text-[10.5px] text-slate-700">Prinsip Moral & Digital Native</p>
+                </div>
+
+                {/* Unit 2 */}
+                <div className="p-3 bg-amber-50 border-2 border-amber-400 space-y-1.5 text-slate-900">
+                  <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 bg-amber-700 text-white block text-center">
+                    UNIT 2
+                  </span>
+                  <h4 className="font-extrabold text-xs text-slate-950">Detektif Informasi</h4>
+                  <p className="text-[10.5px] text-slate-700">Metode S.I.F.T & Anti-Hoaks</p>
+                </div>
+
+                {/* Unit 3 */}
+                <div className="p-3 bg-blue-50 border-2 border-blue-400 space-y-1.5 text-slate-900">
+                  <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 bg-blue-800 text-white block text-center">
+                    UNIT 3
+                  </span>
+                  <h4 className="font-extrabold text-xs text-slate-950">Privasi Data (UU PDP)</h4>
+                  <p className="text-[10.5px] text-slate-700">Keamanan & 10 Langkah Privasi</p>
+                </div>
+
+                {/* Unit 4 */}
+                <div className="p-3 bg-purple-50 border-2 border-purple-400 space-y-1.5 text-slate-900">
+                  <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 bg-purple-800 text-white block text-center">
+                    UNIT 4
+                  </span>
+                  <h4 className="font-extrabold text-xs text-slate-950">Hak Cipta & Etika AI</h4>
+                  <p className="text-[10.5px] text-slate-700">Sitasi APA 7th & Anti-Plagiarisme</p>
+                </div>
+
+                {/* Unit 5 */}
+                <div className="p-3 bg-rose-50 border-2 border-rose-400 space-y-1.5 text-slate-900">
+                  <span className="text-[10px] font-mono font-black uppercase px-1.5 py-0.5 bg-rose-800 text-white block text-center">
+                    UNIT 5
+                  </span>
+                  <h4 className="font-extrabold text-xs text-slate-950">Bijak Bersosial Media</h4>
+                  <p className="text-[10.5px] text-slate-700">Etika 5P & Anti-Cyberbullying</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center text-[10px] font-mono text-slate-500 pt-3 border-t border-slate-200">
+              E-Modul Etika Informasi UNJ • Halaman 4 dari {totalBookPages}
             </div>
           </div>
 
@@ -728,7 +772,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     1. HALAMAN COVER/JUDUL BAB (SEPARASI HALAMAN)
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page border-4 sm:border-8 border-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white relative overflow-hidden print:border-2 print:rounded-none page-break"
+                  className="pdf-book-page border-4 sm:border-8 border-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8 space-y-4 sm:space-y-6 flex flex-col justify-between bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 text-white relative overflow-hidden print:border-2 print:rounded-none page-break"
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   {/* Top Badge */}
@@ -823,7 +867,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     2. HALAMAN MATERI PEMBAHASAN & GAMBAR INFOGRAFIS EMBEDDED
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   <div className="space-y-3 sm:space-y-4">
@@ -899,7 +943,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                     3. HALAMAN LATIHAN KUIS & KUNCI JAWABAN BAB
                    ------------------------------------------- */}
                 <div 
-                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+                  className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
                   style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
                 >
                   <div className="space-y-3 sm:space-y-4">
@@ -966,10 +1010,10 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
           })}
 
           {/* ==========================================
-              BAB VI: EVALUASI AKHIR (POST-TEST) & KUNCI JAWABAN
+              BAB VI: EVALUASI AKHIR (POST-TEST) BAGIAN 1 (SOAL 1-5)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-3 sm:space-y-4">
@@ -977,30 +1021,30 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               <div className="border-b-2 sm:border-b-4 border-slate-900 pb-2 flex items-start justify-between">
                 <div>
                   <span className="px-2.5 py-1 bg-purple-900 text-amber-300 font-mono font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-md">
-                    BAB VI (EVALUASI AKHIR)
+                    BAB VI (POST-TEST - BAGIAN 1)
                   </span>
                   <h2 className="text-xl sm:text-2xl font-black font-serif uppercase text-slate-950 mt-1">
-                    SOAL EVALUASI AKHIR (POST-TEST) & KUNCI JAWABAN
+                    SOAL EVALUASI AKHIR (SOAL #1 - #5)
                   </h2>
                   <p className="text-[11px] sm:text-xs font-serif italic text-slate-600 font-semibold">
-                    10 Soal Ujian Komprehensif Menguji Seluruh Pemahaman Unit 1 s/d Unit 5
+                    Ujian Komprehensif Menguji Pemahaman Unit 1 s/d Unit 5
                   </p>
                 </div>
                 <Award className="w-7 h-7 sm:w-8 sm:h-8 text-purple-900 shrink-0" />
               </div>
 
-              {/* Soal Ujian Akhir List */}
-              <div className="space-y-2.5 text-xs">
-                {defaultFinalQuestions.map((fq, fIdx) => {
+              {/* Soal Ujian Akhir List Part 1 (1-5) */}
+              <div className="space-y-2 text-xs">
+                {defaultFinalQuestions.slice(0, 5).map((fq, fIdx) => {
                   const correctFLetter = optionLetters[fq.correctAnswerIndex] || 'A';
                   const correctFOptionText = fq.options[fq.correctAnswerIndex];
 
                   return (
-                    <div key={fq.id || fIdx} className="p-2.5 sm:p-3 rounded-xl border border-slate-300 bg-slate-50 space-y-1.5">
-                      <p className="font-extrabold text-slate-900 text-xs">
+                    <div key={fq.id || fIdx} className="p-2 sm:p-2.5 rounded-xl border border-slate-300 bg-slate-50 space-y-1">
+                      <p className="font-extrabold text-slate-900 text-[11px] sm:text-xs">
                         Soal Ujian #{fIdx + 1}: {fq.question}
                       </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10.5px] text-slate-800 font-medium pl-1">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px] text-slate-800 font-medium pl-1">
                         {fq.options.map((fOpt, fOptIdx) => (
                           <div 
                             key={fOptIdx} 
@@ -1012,12 +1056,12 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                       </div>
 
                       {/* Official Answer Key & Explanation */}
-                      <div className="p-1.5 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-950 space-y-0.5 text-[10px]">
+                      <div className="p-1 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-950 space-y-0.5 text-[9.5px]">
                         <div className="flex items-center gap-1 font-black text-emerald-900">
                           <Key className="w-3 h-3 text-emerald-700 shrink-0" />
                           <span>KUNCI #{fIdx + 1}: [{correctFLetter}] {correctFOptionText}</span>
                         </div>
-                        <p className="text-[9.5px] leading-tight text-emerald-900 font-serif">
+                        <p className="text-[9px] leading-tight text-emerald-900 font-serif">
                           <strong>Pembahasan:</strong> {fq.explanation}
                         </p>
                       </div>
@@ -1028,7 +1072,75 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
 
             <div className="text-center text-[9px] sm:text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-200">
-              Modul Ajar Cetak • BAB VI (POST-TEST) • Halaman {totalBookPages - 1} dari {totalBookPages}
+              Modul Ajar Cetak • BAB VI (POST-TEST Bagian 1) • Halaman 20 dari {totalBookPages}
+            </div>
+          </div>
+
+          {/* ==========================================
+              BAB VI: EVALUASI AKHIR (POST-TEST) BAGIAN 2 (SOAL 6-10)
+             ========================================== */}
+          <div 
+            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
+            style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
+          >
+            <div className="space-y-3 sm:space-y-4">
+              {/* Header Banner */}
+              <div className="border-b-2 sm:border-b-4 border-slate-900 pb-2 flex items-start justify-between">
+                <div>
+                  <span className="px-2.5 py-1 bg-purple-900 text-amber-300 font-mono font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-md">
+                    BAB VI (POST-TEST - BAGIAN 2)
+                  </span>
+                  <h2 className="text-xl sm:text-2xl font-black font-serif uppercase text-slate-950 mt-1">
+                    SOAL EVALUASI AKHIR (SOAL #6 - #10) & KUNCI JAWABAN
+                  </h2>
+                  <p className="text-[11px] sm:text-xs font-serif italic text-slate-600 font-semibold">
+                    Lanjutan Ujian Komprehensif Menguji Pemahaman Unit 1 s/d Unit 5
+                  </p>
+                </div>
+                <Award className="w-7 h-7 sm:w-8 sm:h-8 text-purple-900 shrink-0" />
+              </div>
+
+              {/* Soal Ujian Akhir List Part 2 (6-10) */}
+              <div className="space-y-2 text-xs">
+                {defaultFinalQuestions.slice(5, 10).map((fq, fIdx) => {
+                  const actualIdx = fIdx + 5;
+                  const correctFLetter = optionLetters[fq.correctAnswerIndex] || 'A';
+                  const correctFOptionText = fq.options[fq.correctAnswerIndex];
+
+                  return (
+                    <div key={fq.id || actualIdx} className="p-2 sm:p-2.5 rounded-xl border border-slate-300 bg-slate-50 space-y-1">
+                      <p className="font-extrabold text-slate-900 text-[11px] sm:text-xs">
+                        Soal Ujian #{actualIdx + 1}: {fq.question}
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[10px] text-slate-800 font-medium pl-1">
+                        {fq.options.map((fOpt, fOptIdx) => (
+                          <div 
+                            key={fOptIdx} 
+                            className={`p-1 rounded ${fOptIdx === fq.correctAnswerIndex ? 'bg-emerald-100 border border-emerald-400 font-extrabold text-emerald-950' : 'bg-white border border-slate-200'}`}
+                          >
+                            {optionLetters[fOptIdx]}. {fOpt}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Official Answer Key & Explanation */}
+                      <div className="p-1 rounded-lg bg-emerald-50 border border-emerald-400 text-emerald-950 space-y-0.5 text-[9.5px]">
+                        <div className="flex items-center gap-1 font-black text-emerald-900">
+                          <Key className="w-3 h-3 text-emerald-700 shrink-0" />
+                          <span>KUNCI #{actualIdx + 1}: [{correctFLetter}] {correctFOptionText}</span>
+                        </div>
+                        <p className="text-[9px] leading-tight text-emerald-900 font-serif">
+                          <strong>Pembahasan:</strong> {fq.explanation}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="text-center text-[9px] sm:text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-200">
+              Modul Ajar Cetak • BAB VI (POST-TEST Bagian 2) • Halaman 21 dari {totalBookPages}
             </div>
           </div>
 
@@ -1036,7 +1148,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN TERAKHIR: LAMPIRAN DIREKTORI VIDEO, SIFT, & REKAPITULASI
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
             <div className="space-y-3 sm:space-y-4">
@@ -1175,15 +1287,15 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
 
             <div className="text-center text-[9px] sm:text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-200">
-              Dokumen Modul Ajar Cetak • Halaman {totalBookPages - 1} dari {totalBookPages}
+              Dokumen Modul Ajar Cetak • Halaman 22 dari {totalBookPages}
             </div>
           </div>
 
           {/* ==========================================
-              HALAMAN 20: INSTRUMEN EVALUASI BAGIAN 1 (IDENTITAS & PERTANYAAN 1-8)
+              HALAMAN 23: INSTRUMEN EVALUASI BAGIAN 1 (IDENTITAS & PERTANYAAN 1-8)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
             style={{ pageBreakBefore: 'always', breakBefore: 'page' }}
           >
             <div className="space-y-3">
@@ -1289,15 +1401,15 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
 
             <div className="text-center text-[9px] sm:text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-200">
-              Instrumen Kuesioner Evaluasi Luring • PERSI UNJ 2026 • Halaman 20 dari {totalBookPages}
+              Instrumen Kuesioner Evaluasi Luring • PERSI UNJ 2026 • Halaman 23 dari {totalBookPages}
             </div>
           </div>
 
           {/* ==========================================
-              HALAMAN 21: INSTRUMEN EVALUASI BAGIAN 2 (PERTANYAAN 9-16 + SARAN & TANDA TANGAN)
+              HALAMAN 24: INSTRUMEN EVALUASI BAGIAN 2 (PERTANYAAN 9-16 + SARAN & TANDA TANGAN)
              ========================================== */}
           <div 
-            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 min-h-[750px] sm:min-h-[880px] flex flex-col justify-between page-break"
+            className="pdf-book-page space-y-3 sm:space-y-4 pt-4 sm:pt-6 flex flex-col justify-between page-break"
             style={{ pageBreakBefore: 'always', breakBefore: 'page' }}
           >
             <div className="space-y-3">
@@ -1391,7 +1503,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             </div>
 
             <div className="text-center text-[9px] sm:text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-200">
-              Instrumen Kuesioner Evaluasi Luring • PERSI UNJ 2026 • Halaman 21 dari {totalBookPages}
+              Instrumen Kuesioner Evaluasi Luring • PERSI UNJ 2026 • Halaman 24 dari {totalBookPages}
             </div>
           </div>
 
