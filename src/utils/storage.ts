@@ -52,10 +52,10 @@ export const defaultProgress: ProgressState = {
 export function getStoredProfile(): StudentProfile {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.PROFILE);
-    if (!raw) return defaultProfile;
+    if (!raw) return emptyProfile;
     return JSON.parse(raw);
   } catch {
-    return defaultProfile;
+    return emptyProfile;
   }
 }
 
@@ -75,11 +75,11 @@ export function getStoredStudents(): StudentProfile[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.STUDENTS_LIST);
     if (!raw) {
-      return [defaultProfile];
+      return [];
     }
     return JSON.parse(raw);
   } catch {
-    return [defaultProfile];
+    return [];
   }
 }
 
@@ -146,11 +146,11 @@ export function getStoredEvaluations(): ModuleEvaluation[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.EVALUATIONS);
     if (!raw) {
-      return defaultEvaluationsSample;
+      return [];
     }
     return JSON.parse(raw);
   } catch {
-    return defaultEvaluationsSample;
+    return [];
   }
 }
 
@@ -230,4 +230,6 @@ export function resetAllData(): void {
   localStorage.removeItem(STORAGE_KEYS.PROFILE);
   localStorage.removeItem(STORAGE_KEYS.PROGRESS);
   localStorage.removeItem(STORAGE_KEYS.PLAGIARISM_REPORTS);
+  localStorage.removeItem(STORAGE_KEYS.STUDENTS_LIST);
+  localStorage.removeItem(STORAGE_KEYS.EVALUATIONS);
 }

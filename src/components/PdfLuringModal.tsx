@@ -388,35 +388,79 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex justify-center p-2 sm:p-6 overflow-y-auto print:p-0 print:bg-white print:static">
-      <div className="bg-white text-slate-900 rounded-3xl max-w-5xl w-full p-6 sm:p-10 space-y-8 relative shadow-2xl my-4 print:shadow-none print:border-none print:m-0 print:p-0 print:max-w-none">
+      {/* Embedded High-Quality Print Styles for Direct Flipbook PDF Generation */}
+      <style>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 8mm 10mm 8mm 10mm;
+          }
+          * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+          body {
+            background: #ffffff !important;
+            color: #000000 !important;
+          }
+          .page-break {
+            page-break-after: always !important;
+            break-after: page !important;
+            page-break-inside: avoid !important;
+          }
+        }
+      `}</style>
+
+      <div className="bg-white text-slate-900 rounded-3xl max-w-5xl w-full p-6 sm:p-10 space-y-6 relative shadow-2xl my-4 print:shadow-none print:border-none print:m-0 print:p-0 print:max-w-none">
         
         {/* Floating Non-Print Control Toolbar */}
-        <div className="flex items-center justify-between border-b border-slate-200 pb-4 print:hidden sticky top-0 bg-white/95 backdrop-blur z-20 pt-2">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-indigo-900 text-amber-300">
-              <Printer className="w-6 h-6" />
+        <div className="space-y-3 print:hidden sticky top-0 bg-white/95 backdrop-blur z-20 pt-2 pb-3 border-b border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-indigo-950 text-amber-300 shadow-md">
+                <Printer className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-black text-base text-slate-900 font-serif flex items-center gap-2">
+                  <span>Modul Ajar Cetak PDF & Flipbook (21 Halaman)</span>
+                  <span className="text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-mono font-bold uppercase">
+                    SIAP DIUNGGAH FLIPBOOK
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-600 font-medium">
+                  21 Halaman Buku Resmi • Sampul • CPMK • 5 Bab Materi + Infografis • Kuis & Jawaban • Form Evaluasi Luring
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="font-extrabold text-base text-slate-900 font-serif">Modul Ajar Cetak PDF / Flipbook Multi-Halaman</h3>
-              <p className="text-xs text-slate-500 font-medium">21 Halaman Buku Cetak • Form Kuesioner Evaluasi 2 Halaman • Infografis Terintegrasi • QR Code Dinamis</p>
+
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <button
+                onClick={handlePrint}
+                className="px-6 py-3 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 hover:from-indigo-900 hover:to-indigo-800 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-400/50"
+              >
+                <Download className="w-4 h-4 text-amber-300 animate-bounce" />
+                <span>📥 DOWNLOAD PDF LANGSUNG (21 Hlm)</span>
+              </button>
+              <button
+                onClick={onClose}
+                className="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+                title="Tutup Modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="px-6 py-2.5 bg-indigo-950 hover:bg-indigo-900 text-amber-300 font-black text-xs rounded-xl shadow-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95"
-            >
-              <Download className="w-4 h-4" />
-              <span>Download PDF / Cetak Buku (21 Hlm)</span>
-            </button>
-            <button
-              onClick={onClose}
-              className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
-              title="Tutup Modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          {/* User Guidance Callout Box for Direct PDF Download */}
+          <div className="p-3 rounded-xl bg-amber-50 border border-amber-300 text-slate-800 text-xs flex items-start gap-2.5 font-sans shadow-xs">
+            <Sparkles className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+            <div className="space-y-0.5">
+              <strong className="text-amber-950 font-bold block">Petunjuk Unduh PDF Langsung (Format Buku Flipbook):</strong>
+              <p className="text-[11px] text-slate-700 leading-relaxed">
+                Ketika Anda mengklik tombol <span className="font-bold text-indigo-950">"DOWNLOAD PDF LANGSUNG"</span>, jendela unduh browser akan terbuka. Pastikan memilih Tujuan/Destination <span className="font-extrabold text-amber-900 bg-amber-200/80 px-1 py-0.5 rounded">"Simpan sebagai PDF" ("Save as PDF")</span>. File PDF 21 halaman yang dihasilkan memiliki tata letak halaman A4 presisi tinggi dengan warna penuh, yang siap diunggah langsung ke software Flipbook (Heyzine, FlipPDF Pro, PubHTML5, Canva, dsb).
+              </p>
+            </div>
           </div>
         </div>
 
