@@ -359,7 +359,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
         @media print {
           @page {
             size: A4 portrait;
-            margin: 6mm 6mm 6mm 6mm;
+            margin: 6mm 8mm 6mm 8mm;
           }
           *, *::before, *::after {
             -webkit-print-color-adjust: exact !important;
@@ -379,8 +379,8 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
           .pdf-book-page {
             box-sizing: border-box !important;
             width: 100% !important;
-            min-height: 270mm !important;
-            max-height: 276mm !important;
+            height: 280mm !important;
+            max-height: 280mm !important;
             overflow: hidden !important;
             page-break-before: always !important;
             page-break-after: always !important;
@@ -388,12 +388,14 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             break-after: page !important;
             page-break-inside: avoid !important;
             break-inside: avoid !important;
-            padding: 4mm 5mm !important;
+            padding: 2mm 3mm !important;
             margin: 0 !important;
             background: #ffffff !important;
-            border: 1px solid #1e293b !important;
-            border-radius: 0 !important;
+            border: none !important;
             box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
           }
           .pdf-book-page-first {
             page-break-before: avoid !important;
@@ -428,13 +430,13 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               </div>
               <div>
                 <h3 className="font-black text-sm sm:text-base text-slate-900 font-serif flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span>Modul Ajar Cetak PDF & Flipbook (21 Halaman)</span>
+                  <span>Modul Ajar Cetak PDF & Flipbook (24 Halaman Resmi)</span>
                   <span className="text-[9px] sm:text-[10px] bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full font-mono font-bold uppercase">
-                    SIAP FLIPBOOK
+                    SIAP FLIPBOOK 3D
                   </span>
                 </h3>
                 <p className="text-[11px] sm:text-xs text-slate-600 font-medium line-clamp-1 sm:line-clamp-none">
-                  21 Halaman Buku Resmi • Sampul • CPMK • 5 Bab Materi + Infografis • Kuis & Jawaban • Form Evaluasi
+                  24 Halaman Buku Resmi • Sampul • CPMK • Peta Konsep • 5 Bab Materi + Infografis • Kuis & Jawaban • Post-Test • Kuesioner Evaluasi
                 </p>
               </div>
             </div>
@@ -445,7 +447,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                 className="flex-1 sm:flex-none px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-900 hover:from-indigo-900 hover:to-indigo-800 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-400/50"
               >
                 <Download className="w-4 h-4 text-amber-300 animate-bounce" />
-                <span>📥 DOWNLOAD PDF LANGSUNG (21 Hlm)</span>
+                <span>📥 DOWNLOAD PDF LANGSUNG (24 Hlm)</span>
               </button>
               <button
                 onClick={onClose}
@@ -461,9 +463,9 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
           <div className="p-2.5 sm:p-3 rounded-xl bg-amber-50 border border-amber-300 text-slate-800 text-xs flex items-start gap-2 font-sans shadow-xs">
             <Sparkles className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
             <div className="space-y-0.5 text-[11px] sm:text-xs">
-              <strong className="text-amber-950 font-bold block">Petunjuk Unduh PDF Langsung (Format Buku Flipbook):</strong>
+              <strong className="text-amber-950 font-bold block">Petunjuk Unduh PDF Langsung (Format Buku Flipbook A4):</strong>
               <p className="text-[10.5px] sm:text-[11px] text-slate-700 leading-relaxed">
-                Klik <span className="font-bold text-indigo-950">"DOWNLOAD PDF LANGSUNG"</span>, pilih Tujuan/Destination <span className="font-extrabold text-amber-900 bg-amber-200/80 px-1 py-0.5 rounded">"Simpan sebagai PDF" ("Save as PDF")</span>. File PDF 21 halaman presisi tinggi siap diunggah langsung ke software Flipbook (Heyzine, FlipPDF Pro, PubHTML5, Canva, dsb).
+                Klik <span className="font-bold text-indigo-950">"DOWNLOAD PDF LANGSUNG"</span>, pilih Tujuan/Destination <span className="font-extrabold text-amber-900 bg-amber-200/80 px-1 py-0.5 rounded">"Simpan sebagai PDF" ("Save as PDF")</span>. File PDF 24 halaman A4 presisi tinggi siap diunggah langsung ke software Flipbook (Heyzine, FlipPDF Pro, PubHTML5, Canva, dsb).
               </p>
             </div>
           </div>
@@ -473,77 +475,74 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
         <div className="space-y-12 text-slate-900 font-sans print:space-y-0">
 
           {/* ==========================================
-              HALAMAN 1: COVER BUKU MODUL AJAR (COVER PAGE)
+              HALAMAN 1: COVER BUKU MODUL AJAR (COVER PAGE) - SIMPLIFIED & ELEGANT
              ========================================== */}
           <div 
-            className="pdf-book-page pdf-book-page-first border-4 sm:border-[6px] border-amber-600 rounded-none p-4 sm:p-8 space-y-4 sm:space-y-6 flex flex-col justify-between bg-[#FAF8F5] relative overflow-hidden print:border-2 print:border-amber-600 print:rounded-none page-break"
+            className="pdf-book-page pdf-book-page-first border-4 sm:border-[6px] border-slate-900 rounded-none p-6 sm:p-10 space-y-6 flex flex-col justify-between bg-[#FCFCFA] relative overflow-hidden print:border-2 print:border-slate-900 print:rounded-none page-break"
             style={{ pageBreakAfter: 'always', breakAfter: 'page' }}
           >
-            {/* Top Bar Banner */}
-            <div className="space-y-2 text-center border-b-2 border-amber-600 pb-3">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 bg-amber-600 text-white font-extrabold text-[10px] sm:text-xs uppercase tracking-wider rounded-xs shadow-xs">
-                  MODUL PEMBELAJARAN
-                </span>
-                <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-800 uppercase tracking-wider">
-                  EDISI SPESIAL 2026
-                </span>
-              </div>
+            {/* Institution Header */}
+            <div className="text-center space-y-1.5 border-b-2 border-slate-900 pb-4">
+              <span className="px-3 py-1 bg-slate-900 text-amber-300 font-mono font-black text-[10px] sm:text-xs uppercase tracking-widest rounded-md inline-block">
+                UNIVERSITAS NEGERI JAKARTA
+              </span>
+              <p className="text-xs sm:text-sm font-serif font-bold uppercase tracking-wider text-slate-800">
+                Fakultas Ilmu Pendidikan • Program Studi Perpustakaan & Sains Informasi
+              </p>
             </div>
 
-            {/* Eyebrow & Title Section */}
-            <div className="space-y-3 text-center py-2">
-              <p className="text-[10px] sm:text-xs font-serif font-black uppercase tracking-[0.2em] text-amber-900">
-                J E L A J A H &nbsp; D I G I T A L &nbsp; • &nbsp; E T I K A &nbsp; I N F O R M A S I &nbsp; • &nbsp; L I T E R A S I &nbsp; K R I T I S
-              </p>
-              
-              <h1 className="text-3xl sm:text-5xl font-black font-serif uppercase tracking-tight text-slate-950 leading-none py-1">
+            {/* Main Title Section - Simple & Clean */}
+            <div className="space-y-4 text-center my-auto py-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 border border-amber-300 rounded-full text-amber-950 text-xs font-mono font-extrabold uppercase tracking-wide">
+                <BookOpen className="w-3.5 h-3.5 text-amber-800" />
+                <span>MODUL PEMBELAJARAN LITERASI DIGITAL</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-6xl font-black font-serif uppercase tracking-tight text-slate-950 leading-tight">
                 {adminConfig.moduleTitle || 'ETIKA INFORMASI'}
               </h1>
-              
-              <p className="text-xs sm:text-base font-serif italic text-slate-700 max-w-2xl mx-auto font-medium">
-                E-Modul Interaktif Berbasis Literasi Digital untuk Generasi Kritis, Cerdas, dan Bertanggung Jawab
+
+              <p className="text-sm sm:text-lg font-serif italic text-slate-700 max-w-xl mx-auto font-medium leading-relaxed">
+                Panduan Komprehensif Etika Informasi, Keamanan Siber, Cek Fakta, dan Pemanfaatan AI Secara Kritis & Bertanggung Jawab
               </p>
             </div>
 
-            {/* Middle Feature Outline Box */}
-            <div className="p-4 sm:p-5 bg-white border-2 border-slate-900 rounded-none shadow-xs space-y-2 text-center max-w-2xl mx-auto w-full">
-              <div className="flex items-center justify-center gap-4 text-amber-600 pb-1">
-                <BookOpen className="w-5 h-5" />
-                <Video className="w-5 h-5" />
-                <ShieldCheck className="w-5 h-5" />
-                <Award className="w-5 h-5" />
+            {/* Prominent QR Code Box to E-Modul Online */}
+            <div className="p-5 bg-white border-2 border-slate-900 rounded-2xl text-center space-y-3 max-w-sm mx-auto w-full shadow-lg">
+              <div className="flex items-center justify-center gap-1.5 text-slate-900 font-extrabold text-xs uppercase tracking-wider border-b border-slate-200 pb-2">
+                <Sparkles className="w-4 h-4 text-amber-600 animate-pulse" />
+                <span>SCAN UNTUK E-MODUL ONLINE</span>
               </div>
-              <p className="text-xs sm:text-sm font-serif font-bold text-slate-900 leading-relaxed">
-                Memuat 5 Unit Pembelajaran Utama, Video E-Learning dengan Scan QR Code, Simulasi Kasus Interaktif, Panduan Cek Fakta, Evaluasi Turnitin No-Repo, dan Kuis Akhir.
-              </p>
-            </div>
 
-            {/* CENTER QR CODE BOX */}
-            <div className="p-4 bg-white border border-slate-300 text-center space-y-2 max-w-md mx-auto w-full shadow-xs">
-              <div className="flex justify-center py-1">
-                <QrCodeSvg value={currentOnlineUrl} size={110} />
+              <div className="flex justify-center py-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                <QrCodeSvg value={currentOnlineUrl} size={145} />
               </div>
-              <p className="text-[11px] font-mono font-bold text-slate-800 uppercase tracking-tight">
-                Scan untuk membuka Versi Interaktif Aplikasi Web
-              </p>
-              <a 
-                href={currentOnlineUrl} 
-                target="_blank" 
-                rel="noreferrer" 
-                className="font-mono text-xs text-amber-700 font-extrabold hover:underline block break-all"
-              >
-                {currentOnlineUrl}
-              </a>
+
+              <div className="space-y-1">
+                <p className="text-[11px] font-mono font-extrabold text-slate-900 uppercase">
+                  Akses Versi Interaktif Web App
+                </p>
+                <p className="text-[10px] text-slate-600 font-medium">
+                  Video E-Learning • Simulasi Kasus • Kuis Otomatis
+                </p>
+                <a 
+                  href={currentOnlineUrl} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="font-mono text-[10.5px] text-indigo-900 font-black hover:underline block break-all pt-1"
+                >
+                  {currentOnlineUrl}
+                </a>
+              </div>
             </div>
 
-            {/* Footer Cover Stamp */}
-            <div className="border-t-2 border-slate-300 pt-3 text-center space-y-1">
-              <p className="text-xs sm:text-sm font-serif font-black uppercase tracking-wider text-slate-900">
+            {/* Author / Footer Info */}
+            <div className="border-t-2 border-slate-900 pt-4 text-center space-y-1">
+              <p className="text-xs sm:text-sm font-serif font-black uppercase tracking-wider text-slate-950">
                 TIM DOSEN PRODI PERPUSTAKAAN DAN SAINS INFORMASI FIP UNJ
               </p>
-              <p className="text-[10px] sm:text-xs font-serif italic text-slate-600">
-                Hak Cipta Dilindungi Undang-Undang • Bebas Digunakan untuk Pendidikan
+              <p className="text-[10px] sm:text-xs font-mono text-slate-600">
+                Edisi Cetak & Luring 2026 • Universitas Negeri Jakarta
               </p>
             </div>
           </div>
@@ -762,9 +761,9 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               HALAMAN BAB 01 S/D BAB 05 (3 HALAMAN LENGKAP PER BAB)
              ========================================== */}
           {units.map((u, uIdx) => {
-            const pageCoverNum = 3 + (uIdx * 3);
-            const pageMateriNum = 4 + (uIdx * 3);
-            const pageKuisNum = 5 + (uIdx * 3);
+            const pageCoverNum = 5 + (uIdx * 3);
+            const pageMateriNum = 6 + (uIdx * 3);
+            const pageKuisNum = 7 + (uIdx * 3);
 
             return (
               <React.Fragment key={u.id}>
