@@ -686,6 +686,35 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
         {/* 3D Flipbook Stage Wrapper */}
         <div className="relative w-full">
           
+          {/* Prominent Direct Download Banner when in A4 Print View Mode */}
+          {viewMode === 'print' && (
+            <div className="mb-3 p-3 sm:p-4 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 rounded-2xl text-slate-950 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl border-2 border-amber-300 print:hidden">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-slate-950 text-amber-300 rounded-xl shrink-0">
+                  <Download className="w-6 h-6 animate-bounce" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-sm sm:text-base font-serif flex items-center gap-2">
+                    <span>Mode Tampilan A4 Lengkap (24 Halaman)</span>
+                    <span className="text-[10px] bg-slate-950 text-amber-300 font-mono px-2 py-0.5 rounded-full font-bold">
+                      SIAP CETAK / PDF
+                    </span>
+                  </h4>
+                  <p className="text-xs text-slate-900 font-medium">
+                    Tampilan persis dengan dokumen fisik A4. Klik tombol di kanan untuk mengunduh/menyimpan langsung sebagai PDF.
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={handlePrint}
+                className="w-full sm:w-auto px-5 py-3 bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 shrink-0 ring-2 ring-slate-900/50"
+              >
+                <Download className="w-4 h-4 text-amber-300 animate-pulse" />
+                <span>📥 DOWNLOAD PDF LANGSUNG (A4)</span>
+              </button>
+            </div>
+          )}
+
           {/* Floating Navigation Arrow - Left */}
           {viewMode === 'flipbook' && (
             <button
@@ -1795,6 +1824,25 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             >
               <span>Berikutnya</span>
               <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
+        {/* Bottom Action Bar for A4 Mode */}
+        {viewMode === 'print' && (
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto print:hidden bg-slate-900/90 text-white p-4 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-amber-400" />
+              <span className="text-xs font-medium text-slate-200">
+                Menampilkan 24 Halaman A4 Modul Luring Lengkap
+              </span>
+            </div>
+            <button
+              onClick={handlePrint}
+              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+            >
+              <Download className="w-4 h-4 text-slate-950 animate-bounce" />
+              <span>📥 DOWNLOAD / SIMPAN SEBAGAI PDF A4 NOW</span>
             </button>
           </div>
         )}
