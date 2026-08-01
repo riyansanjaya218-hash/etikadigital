@@ -16,6 +16,7 @@ interface AdminDashboardProps {
   onResetStudentProgress: () => void;
   onOpenCertificateModal?: () => void;
   onViewStudentModule?: () => void;
+  onOpenPdfLuring?: () => void;
   onLogoutAdmin?: () => void;
 }
 
@@ -29,6 +30,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   onResetStudentProgress,
   onOpenCertificateModal,
   onViewStudentModule,
+  onOpenPdfLuring,
   onLogoutAdmin
 }) => {
   const [usernameInput, setUsernameInput] = useState('');
@@ -263,7 +265,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <span>Dashboard Admin Pembelajaran</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {onOpenPdfLuring && (
+              <button
+                onClick={onOpenPdfLuring}
+                className="px-3.5 py-1.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl flex items-center gap-1.5 transition-all shadow-lg border border-amber-300/60 hover:scale-105 active:scale-95"
+                title="Buka & Download Modul Cetak/Flipbook 3D (24 Halaman Presisi)"
+              >
+                <BookOpen className="w-4 h-4 text-slate-950" />
+                <span>📖 Download E-Modul (Buku 24 Hlm)</span>
+              </button>
+            )}
+
             {onViewStudentModule && (
               <button
                 onClick={onViewStudentModule}
@@ -354,6 +367,36 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="p-4 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-200 font-semibold text-xs flex items-center gap-2 backdrop-blur-md">
           <Check className="w-4 h-4 text-emerald-400" />
           <span>Perubahan konfigurasi admin berhasil disimpan!</span>
+        </div>
+      )}
+
+      {/* Admin Feature Banner for Direct Book E-Modul Download */}
+      {onOpenPdfLuring && (
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 text-slate-950 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border-2 border-amber-300">
+          <div className="flex items-start gap-3">
+            <div className="p-3 bg-slate-950 text-amber-300 rounded-2xl shrink-0 shadow-md">
+              <Printer className="w-6 h-6" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="font-black text-base sm:text-lg font-serif flex flex-wrap items-center gap-2 text-slate-950">
+                <span>Unduh E-Modul Lengkap Dalam Bentuk Buku (24 Halaman)</span>
+                <span className="text-[10px] bg-slate-950 text-amber-300 px-2.5 py-0.5 rounded-full font-mono font-bold uppercase">
+                  VERSI CETAK & FLIPBOOK 3D
+                </span>
+              </h3>
+              <p className="text-xs text-slate-900 font-medium max-w-2xl leading-relaxed">
+                Akses tampilan buku resmi e-modul luring yang persis sama dengan peserta: Flipbook 3D interaktif dan dokumen A4 siap cetak / unduh PDF langsung (mencakup Cover, CPMK, Peta Konsep, 5 Unit Materi, Kuis & Jawaban, Post-Test, serta Lembar Evaluasi).
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={onOpenPdfLuring}
+            className="w-full sm:w-auto px-6 py-3 bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs sm:text-sm rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-2.5 shrink-0 hover:scale-105 active:scale-95 border border-amber-400/50 cursor-pointer"
+          >
+            <Download className="w-4 h-4 text-amber-300 animate-bounce" />
+            <span>📖 BUKA & DOWNLOAD BUKU MODUL</span>
+          </button>
         </div>
       )}
 

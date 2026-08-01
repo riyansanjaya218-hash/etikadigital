@@ -315,6 +315,7 @@ export default function App() {
               onResetStudentProgress={handleResetProgress}
               onOpenCertificateModal={handleOpenCertificate}
               onViewStudentModule={() => setActiveTab('unit-1')}
+              onOpenPdfLuring={() => setShowPdfLuringModal(true)}
               onLogoutAdmin={() => {
                 setIsAdmin(false);
                 setActiveTab('cover');

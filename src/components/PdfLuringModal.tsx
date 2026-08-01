@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+// @ts-ignore
+import html2pdf from 'html2pdf.js';
 import { 
   X, Printer, Video, BookOpen, ShieldCheck, Award, ExternalLink, Key, 
   GraduationCap, UserCheck, HelpCircle, Sparkles, Download, Layers, 
   CheckCircle, AlertTriangle, FileText, Check, ChevronLeft, ChevronRight, 
-  RotateCcw, Volume2, VolumeX, Play, Pause, BookOpenCheck, List, Eye
+  RotateCcw, Volume2, VolumeX, Play, Pause, BookOpenCheck, List, Eye, Loader2
 } from 'lucide-react';
 import { AdminConfig, LearningUnit, ProgressState, StudentProfile } from '../types';
 import { defaultFinalQuestions, defaultLikertQuestions } from '../data/defaultData';
@@ -347,6 +349,48 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isAutoplay, setIsAutoplay] = useState<boolean>(false);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState<boolean>(false);
+
+  const handleDownloadPdf = async () => {
+    setIsGeneratingPdf(true);
+    const prevMode = viewMode;
+    setViewMode('print');
+
+    // Wait for DOM to render all pages
+    await new Promise((resolve) => setTimeout(resolve, 450));
+
+    const element = document.getElementById('printable-emodul-document');
+    if (!element) {
+      window.print();
+      setIsGeneratingPdf(false);
+      return;
+    }
+
+    const opt = {
+      margin: [0, 0, 0, 0],
+      filename: 'E-Modul_Etika_Informasi_Luring_24Halaman.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    };
+
+    try {
+      // @ts-ignore
+      if (typeof html2pdf !== 'undefined') {
+        // @ts-ignore
+        await html2pdf().set(opt).from(element).save();
+      } else {
+        window.print();
+      }
+    } catch (err) {
+      console.error('Direct PDF download error:', err);
+      window.print();
+    } finally {
+      setIsGeneratingPdf(false);
+      setViewMode(prevMode);
+    }
+  };
 
   const handlePrint = () => {
     window.print();
@@ -576,15 +620,33 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             {/* Action Buttons */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <button
-                onClick={handlePrint}
-                className="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-300/60"
+                onClick={handleDownloadPdf}
+                disabled={isGeneratingPdf}
+                className="flex-1 sm:flex-none px-4 sm:px-5 py-2.5 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 ring-2 ring-amber-300/60 disabled:opacity-75 cursor-pointer"
+                title="Langsung Download File PDF ke Perangkat Anda"
               >
-                <Download className="w-4 h-4 text-slate-950 animate-bounce" />
-                <span>📥 DOWNLOAD PDF LANGSUNG (24 Hlm)</span>
+                {isGeneratingPdf ? (
+                  <>
+                    <Loader2 className="w-4 h-4 text-slate-950 animate-spin" />
+                    <span>⏳ MENGUNDUH FILE PDF...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 text-slate-950 animate-bounce" />
+                    <span>📥 DOWNLOAD FILE PDF LANGSUNG (24 Hlm)</span>
+                  </>
+                )}
+              </button>
+              <button
+                onClick={handlePrint}
+                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 transition-colors shrink-0 border border-slate-700 cursor-pointer"
+                title="Buka Dialog Cetak Browser (Alternatif)"
+              >
+                <Printer className="w-5 h-5" />
               </button>
               <button
                 onClick={onClose}
-                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shrink-0 border border-slate-700"
+                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors shrink-0 border border-slate-700 cursor-pointer"
                 title="Tutup Modal"
               >
                 <X className="w-5 h-5" />
@@ -706,11 +768,21 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
                 </div>
               </div>
               <button
-                onClick={handlePrint}
-                className="w-full sm:w-auto px-5 py-3 bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 shrink-0 ring-2 ring-slate-900/50"
+                onClick={handleDownloadPdf}
+                disabled={isGeneratingPdf}
+                className="w-full sm:w-auto px-5 py-3 bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs sm:text-sm rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 shrink-0 ring-2 ring-slate-900/50 disabled:opacity-75 cursor-pointer"
               >
-                <Download className="w-4 h-4 text-amber-300 animate-pulse" />
-                <span>📥 DOWNLOAD PDF LANGSUNG (A4)</span>
+                {isGeneratingPdf ? (
+                  <>
+                    <Loader2 className="w-4 h-4 text-amber-300 animate-spin" />
+                    <span>⏳ MENGUNDUH PDF...</span>
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 text-amber-300 animate-pulse" />
+                    <span>📥 DOWNLOAD FILE PDF LANGSUNG (A4)</span>
+                  </>
+                )}
               </button>
             </div>
           )}
@@ -751,6 +823,7 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
             <div className="space-y-12 text-slate-900 font-sans print:space-y-0">
               <AnimatePresence mode="wait">
                 <motion.div
+                  id="printable-emodul-document"
                   key={viewMode === 'flipbook' ? currentPage : 'print-all'}
                   initial={{ rotateY: viewMode === 'flipbook' ? -10 : 0, opacity: 0.9, scale: 0.99 }}
                   animate={{ rotateY: 0, opacity: 1, scale: 1 }}
@@ -1838,11 +1911,21 @@ export const PdfLuringModal: React.FC<PdfLuringModalProps> = ({
               </span>
             </div>
             <button
-              onClick={handlePrint}
-              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+              onClick={handleDownloadPdf}
+              disabled={isGeneratingPdf}
+              className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 disabled:opacity-75 cursor-pointer"
             >
-              <Download className="w-4 h-4 text-slate-950 animate-bounce" />
-              <span>📥 DOWNLOAD / SIMPAN SEBAGAI PDF A4 NOW</span>
+              {isGeneratingPdf ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-slate-950 animate-spin" />
+                  <span>⏳ MENGUNDUH FILE PDF...</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4 text-slate-950 animate-bounce" />
+                  <span>📥 DOWNLOAD FILE PDF LANGSUNG (.PDF)</span>
+                </>
+              )}
             </button>
           </div>
         )}
