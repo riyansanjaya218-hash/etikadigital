@@ -30,7 +30,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://drive.google.com/file/d/1VMBFj_Ze9c9PNJU24B5r8JKPrC4oR2OO/view?usp=sharing',
+      url: 'https://drive.google.com/file/d/1na-A26GrIrMiu-gzf7IOvB8nLKvn_PDS/view?usp=sharing',
       title: 'Video Pengantar Unit 1: Mengapa Etika Informasi Penting di Era Digital?',
       duration: 'Pengantar Modul'
     },
@@ -908,7 +908,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://drive.google.com/file/d/1oxtzdAJzdJpuLlQd432RNTnabn61wvNP/view?usp=sharing',
+      url: 'https://drive.google.com/file/d/1y2ltq39aJJ9VppPy0JcqR6ouLvG0UGhY/view?usp=sharing',
       title: 'Video Pengantar Unit 4: Menghargai Karya, Menjunjung Integritas',
       duration: 'Hak Cipta & Sitasi'
     },
