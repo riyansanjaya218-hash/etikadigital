@@ -30,7 +30,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://docs.google.com/videos/d/1iJYlVbE6mH172AIPuzvfAr_Rja2N81KLuLIQ29OWzBc/play?usp=sharing',
+      url: 'https://drive.google.com/file/d/1VMBFj_Ze9c9PNJU24B5r8JKPrC4oR2OO/view?usp=sharing',
       title: 'Video Pengantar Unit 1: Mengapa Etika Informasi Penting di Era Digital?',
       duration: 'Pengantar Modul'
     },
@@ -316,7 +316,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://docs.google.com/videos/d/1nwk7Ebr_iX365uBz_qQoWvJZvf4PEPtDcyVV-tkko4g/play?usp=sharing',
+      url: 'https://drive.google.com/file/d/1KH3BlDCR6IrWkrInGVMeSFmgMbcATbR6/view?usp=sharing',
       title: 'Video Pengantar Unit 2: Yuk, Jadi Detektif Informasi!',
       duration: 'Verifikasi & Cek Fakta'
     },
@@ -621,7 +621,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://docs.google.com/videos/d/1uGQi7fMFVfl6rkRTYKH08xuKzVxrgHQu4Sa20YgxoIY/play?usp=sharing',
+      url: 'https://drive.google.com/file/d/1l7aLpeC6EddmWdDb72YaIxuvHYWNXakq/view?usp=sharing',
       title: 'Video Pengantar Unit 3: Data Pribadimu, Harta Berharga di Dunia Digital',
       duration: 'Keamanan Digital'
     },
@@ -908,7 +908,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://docs.google.com/videos/d/1vw5QwWFyPqDhi6oOgmexaiVUE5p3vLzGMNyoozX4zos/play?usp=sharing',
+      url: 'https://drive.google.com/file/d/1oxtzdAJzdJpuLlQd432RNTnabn61wvNP/view?usp=sharing',
       title: 'Video Pengantar Unit 4: Menghargai Karya, Menjunjung Integritas',
       duration: 'Hak Cipta & Sitasi'
     },
@@ -1277,7 +1277,7 @@ export const defaultUnits: LearningUnit[] = [
     ],
     video: {
       type: 'gdrive',
-      url: 'https://docs.google.com/videos/d/1t58qBjIt_63EZB4c-v70G8ojDUChNILn8sApQIXddMo/play?usp=sharing',
+      url: 'https://drive.google.com/file/d/1HGVaVPIXIg6i7N-6uATU5qkyy4CbT19l/view?usp=sharing',
       title: 'Video Pengantar Unit 5: Bijak Bersosial Media di Ruang Publik Digital',
       duration: 'Etika Bersosial Media'
     },
